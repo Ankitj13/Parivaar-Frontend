@@ -1,0 +1,180 @@
+import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import AddMember from "./AddMember";
+import { useDispatch, useSelector } from "react-redux";
+import { loadMembersUsers } from "../../actions/publicActions";
+import Pagination from "../include/Pagination";
+
+import { addMember } from "../../actions/auth";
+
+function Add() {
+  // const [filteredEmployee, setFilterededEmployee] = useState([]);
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const [showPerPage, setShowPerPage] = useState(10);
+
+  const [pagination, setPagination] = useState({
+    start: 0,
+    end: showPerPage,
+  });
+  const onPaginationChange = (start, end) => {
+    setPagination({ start: start, end: end });
+  };
+  const [successful, setSuccessful] = useState(false);
+  const dispatch = useDispatch();
+
+  // let dispatch = useDispatch();
+  const { employees } = useSelector((state) => state.data);
+  useEffect(() => {
+    dispatch(loadMembersUsers());
+  }, []);
+
+  // useEffect(() => {
+  //   return setFilterededEmployee(
+  //     employees.filter((employee) => {
+  //       return Object.values(employee)
+  //         .join(" ")
+  //         .toLowerCase()
+  //         .includes(search.toLowerCase());
+  //     })
+  //   );
+  // }, [search, employees]);
+
+  const saveChanges = (values) => {
+    dispatch(addMember(values))
+      .then(() => {
+        setShow(false);
+        dispatch(loadMembersUsers());
+        setSuccessful(true);
+
+        //  window.location.reload();
+      })
+      .catch((e) => {
+        console.log(e.response.data);
+        setSuccessful(false);
+      });
+  };
+
+  return (
+    <React.Fragment>
+      <div class="content-wrapper">
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1>Add Employee</h1>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-lg-4 col-12">
+                <div class="form-group">
+                  <form class="search-form">
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="Search"
+                      />
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="col-lg-6 col-12">
+                <div class="form-group"></div>
+              </div>
+              <div class="col-lg-2 col-12">
+                <div class="form-group">
+                  <button
+                    type="button"
+                    class="btn btn-block btn-outline-primary"
+                    data-toggle="modal"
+                    data-target="#modal-lg"
+                    onClick={handleShow}
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                      <thead>
+                        <tr>
+                          <th className="text-left">S.no.</th>
+                          <th className="text-left">Name</th>
+                          <th className="text-left">Email</th>
+                          <th className="text-left">Mobile</th>
+                          <th className="text-left">Village</th>
+                          <th className="text-left">Role</th>
+                          <th className="text-left">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {employees &&
+                          employees
+                            .slice(pagination.start, pagination.end)
+                            .map((employee, i) => (
+                              <tr key={employee.id}>
+                                <td className="text-left">{i + 1}</td>
+                                <td className="text-left">{employee.name}</td>
+                                <td className="text-left">{employee.email}</td>
+                                <td className="text-left">
+                                  {employee.mobileno}
+                                </td>
+                                <td className="text-left">
+                                  {employee.village}
+                                </td>
+                                <td className="text-left">
+                                  {employee.role_id}
+                                </td>
+                                <td className="text-left">
+                                  <NavLink to="/" style={{ marginRight: 20 }}>
+                                    <i class="fas fa-edit"></i>
+                                  </NavLink>
+                                  <NavLink to="/">
+                                    <i class="fas fa-trash"></i>
+                                  </NavLink>
+                                </td>
+                              </tr>
+                            ))}
+                      </tbody>
+                    </table>
+                    <hr />
+                    <div className="col-12">
+                      <Pagination
+                        showPerPage={showPerPage}
+                        onPaginationChange={onPaginationChange}
+                        total={employees.length}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <AddMember
+        show={show}
+        handleClose={handleClose}
+        handleSubmit={saveChanges}
+      />
+    </React.Fragment>
+  );
+}
+
+export default Add;

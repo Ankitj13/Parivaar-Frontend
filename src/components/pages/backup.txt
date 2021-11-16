@@ -1,0 +1,739 @@
+import React, { Component, useState } from "react";
+import { NavLink } from "react-router-dom";
+
+import { Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
+import AddBenegiciaryDialog from "./AddBenegiciaryDialog";
+
+function Beneficiary() {
+  // const { user: currentUser } = useSelector((state) => state.auth);
+
+  // if (!currentUser) {
+  //   return <Redirect to="/login" />;
+  // }
+
+  const [modalShow, setModalShow] = useState(false);
+
+  return (
+
+      <div className="content-wrapper">
+        <section className="content-header">
+          <div className="container-fluid">
+            <div className="row mb-2">
+              <div className="col-sm-6">
+                <h1>Beneficiary</h1>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="content">
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-lg-4 col-12">
+                <form className="search-form">
+                  <div className="input-group">
+                    <input
+                      type="text"
+                      name="search"
+                      className="form-control"
+                      placeholder="Search"
+                    />
+
+                    <div className="input-group-append">
+                      <button
+                        type="submit"
+                        name="submit"
+                        className="btn btn-warning"
+                      >
+                        <i className="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div className="col-lg-2 col-12"><div className="form-group"></div></div>
+              <div className="col-lg-2 col-6">
+                <div className="form-group">
+                  <select className="form-control">
+                    <option>District</option>
+                    <option>option 2</option>
+                    <option>option 3</option>
+                    <option>option 4</option>
+                    <option>option 5</option>
+                  </select>
+                </div>
+              </div>
+              <div className="col-lg-2 col-6">
+                <div className="form-group">
+                  <select className="form-control">
+                    <option>Cluster</option>
+                    <option>option 2</option>
+                    <option>option 3</option>
+                    <option>option 4</option>
+                    <option>option 5</option>
+                  </select>
+                </div>
+              </div>
+              <div className="col-lg-2 col-12">
+                <div className="form-group">
+                  <select className="form-control">
+                    <option>Kutir</option>
+                    <option>option 2</option>
+                    <option>option 3</option>
+                    <option>option 4</option>
+                    <option>option 5</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-12">
+                <div className="card-outline-tabs">
+                  <div className="card-header p-0 border-bottom-0">
+                    <ul
+                      className="nav nav-tabs "
+                      id="custom-tabs-four-tab"
+                      role="tablist"
+                    >
+                    <li className="pt-2 px-3">
+                    <NavLink to="#"><i className="fas fa-user-plus" data-toggle="modal" data-target="#modal-lg" onClick={() => setModalShow(true)}></i></NavLink>
+                    </li>
+                      <li className="nav-item">
+                        <a
+                          className="nav-link active"
+                          id="custom-tabs-four-child-tab"
+                          data-toggle="pill"
+                          href="#custom-tabs-four-child"
+                          role="tab"
+                          aria-controls="custom-tabs-four-child"
+                          aria-selected="true"
+                        >
+                          Child
+                        </a>
+                      </li>
+                      <li className="nav-item">
+                        <a
+                          className="nav-link"
+                          id="custom-tabs-four-lactating-mother-tab"
+                          data-toggle="pill"
+                          href="#custom-tabs-four-lactating-mother"
+                          role="tab"
+                          aria-controls="custom-tabs-four-lactating-mother"
+                          aria-selected="false"
+                        >
+                          Lactating Mother
+                        </a>
+                      </li>
+                      <li className="nav-item">
+                        <a
+                          className="nav-link"
+                          id="custom-tabs-four-four-mother-tab"
+                          data-toggle="pill"
+                          href="#custom-tabs-four-mother"
+                          role="tab"
+                          aria-controls="custom-tabs-four-mother"
+                          aria-selected="false"
+                        >
+                          Mother
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="tab-content" id="custom-tabs-four-tabContent">
+                    <div
+                      className="tab-pane fade show active"
+                      id="custom-tabs-four-child"
+                      role="tabpanel"
+                      aria-labelledby="custom-tabs-four-child-tab"
+                    >
+                      <div className="card card-primary card-outline card-outline-tabs">
+                        <div className="card-header p-0">
+                          <ul
+                            className="nav nav-tabs"
+                            id="custom-tabs-four-tab"
+                            role="tablist"
+                          >
+                            <li className="nav-item">
+                              <a
+                                className="nav-link active"
+                                id="custom-tabs-four-child-daily-tab"
+                                data-toggle="pill"
+                                href="#custom-tabs-four-child-daily"
+                                role="tab"
+                                aria-controls="custom-tabs-four-child-daily"
+                                aria-selected="true"
+                              >
+                                Daily
+                              </a>
+                            </li>
+                            <li className="nav-item">
+                              <a
+                                className="nav-link"
+                                id="custom-tabs-four-child-quarterly-tab"
+                                data-toggle="pill"
+                                href="#custom-tabs-four-child-quarterly"
+                                role="tab"
+                                aria-controls="custom-tabs-four-child-quarterly"
+                                aria-selected="false"
+                              >
+                                Quarterly
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="card-body">
+                          <div
+                            className="tab-content"
+                            id="custom-tabs-four-tabContent"
+                          >
+                            <div
+                              className="tab-pane fade show active"
+                              id="custom-tabs-four-child-daily"
+                              role="tabpanel"
+                              aria-labelledby="custom-tabs-four-child-daily-tab"
+                            >
+                              <div className="card-body table-responsive p-0">
+                                <table className="table table-hover text-nowrap">
+                                  <thead>
+                                    <tr>
+                                      <th>S. No.</th>
+                                      <th>Name</th>
+                                      <th className="text-center"><img src="dist/img/icone/meal.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/milk.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/protein.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/xyz.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/calcium.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>1</td>
+                                      <td>John Doe</td>
+                                      <td className="text-center"><div className="form-group"><div className="form-check"><input className="form-check-input" type="checkbox" /></div></div></td>
+                                      <td className="text-center"><div className="form-group"><div className="form-check"><input className="form-check-input" type="checkbox" /></div></div></td>
+                                      <td className="text-center"><div className="form-group"><div className="form-check"><input className="form-check-input" type="checkbox" /></div></div></td>
+                                      <td className="text-center"><div className="form-group"><div className="form-check"><input className="form-check-input" type="checkbox" /></div></div></td>
+                                      <td className="text-center"><div className="form-group"><div className="form-check"><input className="form-check-input" type="checkbox" /></div></div></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            <div
+                              className="tab-pane fade"
+                              id="custom-tabs-four-child-quarterly"
+                              role="tabpanel"
+                              aria-labelledby="custom-tabs-four-child-quarterly-tab"
+                            >
+                              <div className="card-body table-responsive p-0">
+                              <table className="table table-hover text-nowrap">
+                                  <thead>
+                                    <tr>
+                                      <th>S. No.</th>
+                                      <th>Name</th>
+                                      <th className="text-center"><img src="dist/img/icone/vaccine.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/height.png" alt="Height" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/Weight.png" alt="Weight" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/tablet.png" alt="Tablet" className="img-size-32 mr-3"/></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                    <td>1</td>
+                                      <td>John Doe</td>
+                                      <td><div className="form-group"><input type="text" className="form-control" placeholder="DCP" /></div></td>
+                                      <td><div className="form-group"><input type="text" className="form-control" placeholder="0.00" /></div></td>
+                                      <td><div className="form-group"><input type="text" className="form-control" placeholder="0.00" /></div></td>
+                                      <td><div className="form-group"><input type="text" className="form-control" placeholder="0.00" /></div></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="tab-pane fade"
+                      id="custom-tabs-four-lactating-mother"
+                      role="tabpanel"
+                      aria-labelledby="custom-tabs-four-lactating-mother-tab"
+                    >
+                      <div className="card card-primary card-outline card-outline-tabs">
+                        <div className="card-header p-0">
+                          <ul
+                            className="nav nav-tabs"
+                            id="custom-tabs-four-tab"
+                            role="tablist"
+                          >
+                            <li className="nav-item">
+                              <a
+                                className="nav-link active"
+                                id="custom-tabs-four-lactating-mother-daily-tab"
+                                data-toggle="pill"
+                                href="#custom-tabs-four-lactating-mother-daily"
+                                role="tab"
+                                aria-controls="custom-tabs-four-lactating-mother-daily"
+                                aria-selected="true"
+                              >
+                                Daily
+                              </a>
+                            </li>
+                            <li className="nav-item">
+                              <a
+                                className="nav-link"
+                                id="custom-tabs-four-lactating-mother-quarterly-tab"
+                                data-toggle="pill"
+                                href="#custom-tabs-four-lactating-mother-quarterly"
+                                role="tab"
+                                aria-controls="custom-tabs-four-lactating-mother-quarterly"
+                                aria-selected="false"
+                              >
+                                Quarterly
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="card-body">
+                          <div
+                            className="tab-content"
+                            id="custom-tabs-four-tabContent"
+                          >
+                            <div
+                              className="tab-pane fade show active"
+                              id="custom-tabs-four-lactating-mother-daily"
+                              role="tabpanel"
+                              aria-labelledby="custom-tabs-four-lactating-mother-daily-tab"
+                            >
+                              <div className="card-body table-responsive p-0">
+                              <table className="table table-hover text-nowrap">
+                                  <thead>
+                                    <tr>
+                                      <th>S. No.</th>
+                                      <th>Name</th>
+                                      <th className="text-center"><img src="dist/img/icone/meal.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/milk.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/protein.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/xyz.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/calcium.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>1</td>
+                                      <td>John Doe</td>
+                                      <td className="text-center"><div className="form-group"><div className="form-check"><input className="form-check-input" type="checkbox" /></div></div></td>
+                                      <td className="text-center"><div className="form-group"><div className="form-check"><input className="form-check-input" type="checkbox" /></div></div></td>
+                                      <td className="text-center"><div className="form-group"><div className="form-check"><input className="form-check-input" type="checkbox" /></div></div></td>
+                                      <td className="text-center"><div className="form-group"><div className="form-check"><input className="form-check-input" type="checkbox" /></div></div></td>
+                                      <td className="text-center"><div className="form-group"><div className="form-check"><input className="form-check-input" type="checkbox" /></div></div></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            <div
+                              className="tab-pane fade"
+                              id="custom-tabs-four-lactating-mother-quarterly"
+                              role="tabpanel"
+                              aria-labelledby="custom-tabs-four-lactating-mother-quarterly-tab"
+                            >
+                              <div className="card-body table-responsive p-0">
+                              <table className="table table-hover text-nowrap">
+                                  <thead>
+                                    <tr>
+                                      <th>S. No.</th>
+                                      <th>Name</th>
+                                      <th className="text-center"><img src="dist/img/icone/vaccine.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/blood-pressure.png" alt="Blood-Pressure" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/Weight.png" alt="Weight" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/tablet.png" alt="Tablet" className="img-size-32 mr-3"/></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                    <td>1</td>
+                                      <td>Jonh</td>
+                                      <td><div className="form-group"><input type="text" className="form-control" placeholder="DCP" /></div></td>
+                                      <td><div className="form-group"><input type="text" className="form-control" placeholder="0.00" /></div></td>
+                                      <td><div className="form-group"><input type="text" className="form-control" placeholder="0.00" /></div></td>
+                                      <td><div className="form-group"><input type="text" className="form-control" placeholder="0.00" /></div></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="tab-pane fade"
+                      id="custom-tabs-four-mother"
+                      role="tabpanel"
+                      aria-labelledby="custom-tabs-four-mother-tab"
+                    >
+                      <div className="card card-primary card-outline card-outline-tabs">
+                        <div className="card-header p-0">
+                          <ul
+                            className="nav nav-tabs"
+                            id="custom-tabs-four-tab"
+                            role="tablist"
+                          >
+                            <li className="nav-item">
+                              <a
+                                className="nav-link active"
+                                id="custom-tabs-four-mother-daily-tab"
+                                data-toggle="pill"
+                                href="#custom-tabs-four-mother-daily"
+                                role="tab"
+                                aria-controls="custom-tabs-four-mother-daily"
+                                aria-selected="true"
+                              >
+                                Daily
+                              </a>
+                            </li>
+                            <li className="nav-item">
+                              <a
+                                className="nav-link"
+                                id="custom-tabs-four-mother-quarterly-tab"
+                                data-toggle="pill"
+                                href="#custom-tabs-four-mother-quarterly"
+                                role="tab"
+                                aria-controls="custom-tabs-four-mother-quarterly"
+                                aria-selected="false"
+                              >
+                                Quarterly
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="card-body">
+                          <div
+                            className="tab-content"
+                            id="custom-tabs-four-tabContent"
+                          >
+                            <div
+                              className="tab-pane fade show active"
+                              id="custom-tabs-four-mother-daily"
+                              role="tabpanel"
+                              aria-labelledby="custom-tabs-four-mother-daily-tab"
+                            >
+                              <div className="card-body table-responsive p-0">
+                              <table className="table table-hover text-nowrap">
+                                  <thead>
+                                    <tr>
+                                      <th>S. No.</th>
+                                      <th>Name</th>
+                                      <th className="text-center"><img src="dist/img/icone/meal.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/milk.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/protein.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/xyz.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/calcium.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>2</td>
+                                      <td>John Doe</td>
+                                      <td className="text-center"><div className="form-group"><div className="form-check"><input className="form-check-input" type="checkbox" /></div></div></td>
+                                      <td className="text-center"><div className="form-group"><div className="form-check"><input className="form-check-input" type="checkbox" /></div></div></td>
+                                      <td className="text-center"><div className="form-group"><div className="form-check"><input className="form-check-input" type="checkbox" /></div></div></td>
+                                      <td className="text-center"><div className="form-group"><div className="form-check"><input className="form-check-input" type="checkbox" /></div></div></td>
+                                      <td className="text-center"><div className="form-group"><div className="form-check"><input className="form-check-input" type="checkbox" /></div></div></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            <div
+                              className="tab-pane fade"
+                              id="custom-tabs-four-mother-quarterly"
+                              role="tabpanel"
+                              aria-labelledby="custom-tabs-four-mother-quarterly-tab"
+                            >
+                              <div className="card-body table-responsive p-0">
+                                <table className="table table-hover text-nowrap">
+                                  <thead>
+                                    <tr>
+                                      <th>S. No.</th>
+                                      <th>Name</th>
+                                      <th className="text-center"><img src="dist/img/icone/vaccine.png" alt="Vaccine" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/blood-pressure.png" alt="Blood Pressure" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/Weight.png" alt="Weight" className="img-size-32 mr-3"/></th>
+                                      <th className="text-center"><img src="dist/img/icone/tablet.png" alt="Tablet" className="img-size-32 mr-3"/></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                    <td>1</td>
+                                      <td>John Doe</td>
+                                      <td><div className="form-group"><input type="text" className="form-control" placeholder="DCP" /></div></td>
+                                      <td><div className="form-group"><input type="text" className="form-control" placeholder="0.00" /></div></td>
+                                      <td><div className="form-group"><input type="text" className="form-control" placeholder="0.00" /></div></td>
+                                      <td><div className="form-group"><input type="text" className="form-control" placeholder="0.00" /></div></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <AddBenegiciaryDialog
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
+      </div>
+      
+    );
+  }
+
+export default Beneficiary
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>Parivaar Health</title>
+  
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/fontawesome-free/css/all.min.css" />
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
+    <!-- iCheck -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/jqvmap/jqvmap.min.css" />
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"/>
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/daterangepicker/daterangepicker.css"/>
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/bs-stepper/css/bs-stepper.min.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/summernote/summernote-bs4.min.css"/>
+    <link rel="stylesheet" href="%PUBLIC_URL%/plugins/dropzone/min/dropzone.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="%PUBLIC_URL%/dist/css/adminlte.min.css"/>
+  </head>
+  <body className="hold-transition sidebar-mini sidebar-collapse">
+    <div className="wrapper">
+    <div id="root"></div>
+    </div>
+  </body>
+
+  <!-- jQuery -->
+<script src="%PUBLIC_URL%/plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="%PUBLIC_URL%/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="%PUBLIC_URL%/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- ChartJS -->
+<script src="%PUBLIC_URL%/plugins/chart.js/Chart.min.js"></script>
+<!-- Sparkline -->
+<script src="%PUBLIC_URL%/plugins/sparklines/sparkline.js"></script>
+<!-- JQVMap -->
+<script src="%PUBLIC_URL%/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="%PUBLIC_URL%/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="%PUBLIC_URL%/plugins/jquery-knob/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="%PUBLIC_URL%/plugins/moment/moment.min.js"></script>
+<script src="%PUBLIC_URL%/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="%PUBLIC_URL%/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Summernote -->
+<script src="%PUBLIC_URL%/plugins/summernote/summernote-bs4.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="%PUBLIC_URL%/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+
+<script src="%PUBLIC_URL%/plugins/jquery-validation/jquery.validate.min.js"></script>
+<!-- Select2 -->
+<script src="%PUBLIC_URL%/plugins/select2/js/select2.full.min.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="%PUBLIC_URL%/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+<script src="%PUBLIC_URL%/plugins/inputmask/jquery.inputmask.min.js"></script>
+<!-- bootstrap color picker -->
+<script src="%PUBLIC_URL%/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<script src="%PUBLIC_URL%/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="%PUBLIC_URL%/plugins/bs-stepper/js/bs-stepper.min.js"></script>
+<script src="%PUBLIC_URL%/plugins/dropzone/min/dropzone.min.js"></script>
+<!-- AdminLTE App -->
+<script src="%PUBLIC_URL%/dist/js/adminlte.js"></script>
+  <script>
+    $(function () {
+      //Initialize Select2 Elements
+      $('.select2').select2()
+  
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+  
+      //Datemask dd/mm/yyyy
+      $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+      //Datemask2 mm/dd/yyyy
+      $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+      //Money Euro
+      $('[data-mask]').inputmask()
+  
+      //Date picker
+      $('#reservationdate').datetimepicker({
+          format: 'L'
+      });
+  
+      //Date and time picker
+      $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+  
+      //Date range picker
+      $('#reservation').daterangepicker()
+      //Date range picker with time picker
+      $('#reservationtime').daterangepicker({
+        timePicker: true,
+        timePickerIncrement: 30,
+        locale: {
+          format: 'MM/DD/YYYY hh:mm A'
+        }
+      })
+      //Date range as a button
+      $('#daterange-btn').daterangepicker(
+        {
+          ranges   : {
+            'Today'       : [moment(), moment()],
+            'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+            'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+          },
+          startDate: moment().subtract(29, 'days'),
+          endDate  : moment()
+        },
+        function (start, end) {
+          $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+        }
+      )
+  
+      //Timepicker
+      $('#timepicker').datetimepicker({
+        format: 'LT'
+      })
+  
+      //Bootstrap Duallistbox
+      $('.duallistbox').bootstrapDualListbox()
+  
+      //Colorpicker
+      $('.my-colorpicker1').colorpicker()
+      //color picker with addon
+      $('.my-colorpicker2').colorpicker()
+  
+      $('.my-colorpicker2').on('colorpickerChange', function(event) {
+        $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+      })
+  
+      $("input[data-bootstrap-switch]").each(function(){
+        $(this).bootstrapSwitch('state', $(this).prop('checked'));
+      })
+  
+    })
+    // BS-Stepper Init
+    document.addEventListener('DOMContentLoaded', function () {
+      window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+    })
+  
+    // DropzoneJS Demo Code Start
+    Dropzone.autoDiscover = false
+  
+    // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+    var previewNode = document.querySelector("#template")
+    previewNode.id = ""
+    var previewTemplate = previewNode.parentNode.innerHTML
+    previewNode.parentNode.removeChild(previewNode)
+  
+    var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+      url: "/target-url", // Set the url
+      thumbnailWidth: 80,
+      thumbnailHeight: 80,
+      parallelUploads: 20,
+      previewTemplate: previewTemplate,
+      autoQueue: false, // Make sure the files aren't queued until manually added
+      previewsContainer: "#previews", // Define the container to display the previews
+      clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+    })
+  
+    myDropzone.on("addedfile", function(file) {
+      // Hookup the start button
+      file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file) }
+    })
+  
+    // Update the total progress bar
+    myDropzone.on("totaluploadprogress", function(progress) {
+      document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+    })
+  
+    myDropzone.on("sending", function(file) {
+      // Show the total progress bar when upload starts
+      document.querySelector("#total-progress").style.opacity = "1"
+      // And disable the start button
+      file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+    })
+  
+    // Hide the total progress bar when nothing's uploading anymore
+    myDropzone.on("queuecomplete", function(progress) {
+      document.querySelector("#total-progress").style.opacity = "0"
+    })
+  
+    // Setup the buttons for all transfers
+    // The "add files" button doesn't need to be setup because the config
+    // `clickable` has already been specified.
+    document.querySelector("#actions .start").onclick = function() {
+      myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+    }
+    document.querySelector("#actions .cancel").onclick = function() {
+      myDropzone.removeAllFiles(true)
+    }
+    // DropzoneJS Demo Code End
+  </script>
+</html>
