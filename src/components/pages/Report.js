@@ -5,32 +5,32 @@ export default class Report extends Component {
   render() {
     return (
       <div>
-        <div class="content-wrapper">
-          <section class="content-header">
-            <div class="container-fluid">
-              <div class="row mb-2">
-                <div class="col-sm-6">
+        <div className="content-wrapper">
+          <section className="content-header">
+            <div className="container-fluid">
+              <div className="row mb-2">
+                <div className="col-sm-6">
                   <h1>Report</h1>
                 </div>
               </div>
             </div>
           </section>
 
-          <section class="content">
-            <div class="container-fluid">
+          <section className="content">
+            <div className="container-fluid">
  <DistrictFilter/>
-              <div class="row">
-                <div class="col-12">
-                  <div class="card card-primary card-outline card-outline-tabs">
-                    <div class="card-header p-0 border-bottom-0">
+              <div className="row">
+                <div className="col-12">
+                  <div className="card card-primary card-outline card-outline-tabs">
+                    <div className="card-header p-0 border-bottom-0">
                       <ul
-                        class="nav nav-tabs"
+                        className="nav nav-tabs"
                         id="custom-tabs-four-tab"
                         role="tablist"
                       >
-                        <li class="nav-item">
+                        <li className="nav-item">
                           <a
-                            class="nav-link active"
+                            className="nav-link active"
                             id="custom-tabs-four-child-tab"
                             data-toggle="pill"
                             href="#custom-tabs-four-child"
@@ -41,9 +41,9 @@ export default class Report extends Component {
                             Child
                           </a>
                         </li>
-                        <li class="nav-item">
+                        <li className="nav-item">
                           <a
-                            class="nav-link"
+                            className="nav-link"
                             id="custom-tabs-four-lacteting-mother-tab"
                             data-toggle="pill"
                             href="#custom-tabs-four-lacteting-mother"
@@ -54,9 +54,9 @@ export default class Report extends Component {
                             Lacteting Mother
                           </a>
                         </li>
-                        <li class="nav-item">
+                        <li className="nav-item">
                           <a
-                            class="nav-link"
+                            className="nav-link"
                             id="custom-tabs-four-mother-tab"
                             data-toggle="pill"
                             href="#custom-tabs-four-mother"
@@ -69,15 +69,15 @@ export default class Report extends Component {
                         </li>
                       </ul>
                     </div>
-                    <div class="card-body">
-                      <div class="tab-content" id="custom-tabs-four-tabContent">
+                    <div className="card-body">
+                      <div className="tab-content" id="custom-tabs-four-tabContent">
                         <div
-                          class="tab-pane active fade show"
+                          className="tab-pane active fade show"
                           id="custom-tabs-four-child"
                           role="tabpanel"
                           aria-labelledby="custom-tabs-four-child-tab"
                         >
-                          <table class="table table-hover text-nowrap">
+                          <table className="table table-hover text-nowrap">
                             <thead>
                               <tr>
                                 <th>Sn.</th>
@@ -95,12 +95,12 @@ export default class Report extends Component {
                           </table>
                         </div>
                         <div
-                          class="tab-pane fade "
+                          className="tab-pane fade "
                           id="custom-tabs-four-lacteting-mother"
                           role="tabpanel"
                           aria-labelledby="custom-tabs-four-lacteting-mother-tab"
                         >
-                          <table class="table table-hover text-nowrap">
+                          <table className="table table-hover text-nowrap">
                             <thead>
                               <tr>
                                 <th>Sn.</th>
@@ -118,12 +118,12 @@ export default class Report extends Component {
                           </table>
                         </div>
                         <div
-                          class="tab-pane fade"
+                          className="tab-pane fade"
                           id="custom-tabs-four-mother"
                           role="tabpanel"
                           aria-labelledby="custom-tabs-four-mother-tab"
                         >
-                          <table class="table table-hover text-nowrap">
+                          <table className="table table-hover text-nowrap">
                             <thead>
                               <tr>
                                 <th>Sn.</th>

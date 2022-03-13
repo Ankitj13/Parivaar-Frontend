@@ -8,9 +8,6 @@ import usersReducers from "./publicReducer";
   message,
   data: usersReducers,
 });
-
-
-
 // const rootReducer = combineReducers({
    
 // });

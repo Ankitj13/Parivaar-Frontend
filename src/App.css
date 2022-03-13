@@ -44,3 +44,10 @@
   color: red;
   font-size: .6rem;
 }
+
+.login-error{
+  color: red;
+  font-size: 1rem;
+  text-align: center;
+  padding-bottom: 5px;
+}

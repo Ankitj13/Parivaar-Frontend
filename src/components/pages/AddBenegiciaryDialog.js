@@ -1,59 +1,100 @@
 import React, { useState } from "react";
-import { Formik, Form } from 'formik';
-import { TextField } from '../fileds/TextField';
-import * as Yup from 'yup';
+import { Formik, Form } from "formik";
+import { TextField } from "../fileds/TextField";
+import * as Yup from "yup";
+import { Modal } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { SelectionFiels } from "../fileds/SelectionFiels";
+
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
+const validateChild = Yup.object({
+  childName: Yup.string()
+    .max(20, "Must be max 20 characters or min 3")
+    .min(3, "Must be min 3 characters or max 20")
+    .required("This filed is required"),
+  parents_name: Yup.string()
+    .max(20, "Must be 20 characters or less then 3")
+    .min(3, "Must be min 3 characters or max 20")
+    .required("This filed is required"),
+  mobileno: Yup.string()
+    .matches(phoneRegExp, "Phone number is not valid")
+    .max(10, "Must be 10 number")
+    .min(10, "Must be 10 number")
+    .required("This filed is required"),
+  village: Yup.string().required("This filed is required"),
+  category: Yup.string().required("This filed is required"),
+  gender: Yup.string().required("This filed is required"),
+  sevakutir_id: Yup.string().required("This filed is required"),
+});
+
+const validateMother = Yup.object({
+  category: Yup.string().required("This filed is required"),
+  sevakutir_id: Yup.string().required("This filed is required"),
+  motherName: Yup.string()
+    .min(3, "Mother name should have at least 3 character")
+    .required("This filed is required"),
+  motherAge: Yup.string().required("This filed is required"),
+  mobile: Yup.string()
+    .matches(phoneRegExp, "Phone number is not valid")
+    .max(10, "Must be 10 number")
+    .min(10, "Must be 10 number")
+    .required("This filed is required"),
+  husband_name: Yup.string()
+    .min(3, "Husband name should have at least 3 character")
+    .required("This filed is required"),
+});
+
+const validateLacticMother = Yup.object({
+  category: Yup.string().required("This filed is required"),
+  sevakutir_id: Yup.string().required("This filed is required"),
+  lacticMotherName: Yup.string()
+    .min(3, "Mother name should have at least 3 character")
+    .required("This filed is required"),
+  age: Yup.string().required("This filed is required"),
+  mobileno: Yup.string()
+    .matches(phoneRegExp, "Phone number is not valid")
+    .max(10, "Must be 10 number")
+    .min(10, "Must be 10 number")
+    .required("This filed is required"),
+  husbandname: Yup.string()
+    .min(3, "Husband name should have at least 3 character")
+    .required("This filed is required"),
+});
+
+const complications = [
+  { value: "1", label: "1" },
+  { value: "2", label: "2" },
+  { value: "3", label: "3" },
+];
+
+const category = [
+  { value: "UR", label: "UR" },
+  { value: "OBC", label: "OBC" },
+  { value: "ST", label: "ST" },
+  { value: "SC", label: "SC" },
+];
+
+const sevakutir_id = [
+  { value: "4f806738-a184-4fac-b3d7-a4f378bbfc61", label: "Handiya" },
+  { value: "4f806738-a184-4fac-b3d7-a4f378bbfc61", label: "Rehti" },
+  { value: "4f806738-a184-4fac-b3d7-a4f378bbfc61", label: "Chakaldi" },
+];
+
+const gender = [
+  { value: "male", label: "Male" },
+  { value: "female", label: "Female" },
+  { value: "other", label: "Other" },
+];
 
 function AddBenegiciaryDialog(props) {
-
-  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-
-  const validate = Yup.object({
-     name: Yup.string()
-     .max(20, 'Must be max 20 characters or min 3')
-     .min(3, 'Must be min 3 characters or max 20')
-     .required('This filed is required'),
-     fathername: Yup.string()
-     .max(20, 'Must be 20 characters or less then 3')
-     .min(3, 'Must be min 3 characters or max 20')
-     .required('This filed is required'),
-     mothername: Yup.string()
-     .max(20, 'Must be 20 characters or less then 3')
-     .min(3, 'Must be min 3 characters or max 20')
-     .required('This filed is required'),
-     mobile: Yup.string()
-     .matches(phoneRegExp, 'Phone number is not valid')
-     .required('This filed is required'),
-     kutir: Yup.string()
-     .max(20, 'Must be 20 characters or less then 3')
-     .min(3, 'Must be min 3 characters or max 20')
-     .required('This filed is required'),
-     husbandname: Yup.string()
-     .max(20, 'Must be 20 characters or less then 3')
-     .min(3, 'Must be min 3 characters or max 20')
-     .required('This filed is required'),
-     age: Yup.string()
-     .max(3, 'Must be 3 characters or min then 1')
-     .min(1, 'Must be min 1 characters or max 3')
-     .required('This filed is required'),
-     noofchild: Yup.string()
-     .max(1, 'Must be 1 characters or min then 1')
-     .min(1, 'Must be min 1 characters or max 1')
-     .required('This filed is required'),
-     totalfamilymembers: Yup.string()
-     .max(1, 'Must be 1 characters or min then 1')
-     .min(1, 'Must be min 1 characters or max 1')
-     .required('This filed is required'),
-  })
+  const { user: currentUser } = useSelector((state) => state.auth);
   const [child, setChild] = useState(false);
   const [mother, setMother] = useState(false);
   const [lactatcMother, setLactatcMother] = useState(false);
+  const [successful, setSuccessful] = useState(false);
 
-  const [selectedValue, setSelectedValue] = useState();
-
-  const handleChange = (e) => {
-    setSelectedValue(e.value);
-    console.log(e.value);
-  };
   const chiledSelected = () => {
     setChild(true);
     setMother(false);
@@ -72,400 +113,333 @@ function AddBenegiciaryDialog(props) {
 
   return (
     <>
-      <div class="modal fade" id="modal-lg" {...props} backdrop="static">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">ADD BENEFICIARY</h4>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
+      <Modal
+        {...props}
+        show={props.show}
+        onHide={props.handleClose}
+        backdrop="static"
+        keyboard={false}
+        size="lg"
+      >
+        <Modal.Header>
+          <Modal.Title>ADD BENEFICIARY </Modal.Title>
+          <button type="button" className="close" onClick={props.handleClose}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </Modal.Header>
+
+        <Modal.Body>
+          <div className="row">
+            <div className="col-md-4">
+              <div className="form-group">
+                <button
+                  className="btn btn-block btn-outline-primary"
+                  onClick={chiledSelected}
+                  type="button"
+                  style={{ marginRight: 5 }}
+                >
+                  Add Child
+                </button>
+              </div>
             </div>
-            <div class="modal-body">
-
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <button
-                        class="btn btn-block btn-outline-primary"
-                        onClick={chiledSelected}
-                        type="button"
-                        style={{ marginRight: 5 }}
-                      >
-                        Add Child
-                      </button>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <button
-                        class="btn btn-block btn-outline-primary"
-                        onClick={lactatcMotherSelected}
-                        type="button"
-                        style={{ marginRight: 5 }}
-                      >
-                        Add Lactatic Mother
-                      </button>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <button
-                        class="btn btn-block btn-outline-primary"
-                        onClick={motherSelected}
-                        type="button"
-                      >
-                        Add Mother
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                {child && (
-                  <>
-                    <Formik
-        initialValues={{
-          name : '',
-          fathername: '',
-          mothername: '',
-          mobile: ''
-        }}
-
-        validationSchema = {validate}
-        onSubmit = {values => {
-          console.log(values);
-        }}
-        >
-          {formik => (
-            <Form>
-          
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group text-center">
-                          <h4>ADD CHILD</h4>
+            <div className="col-md-4">
+              <div className="form-group">
+                <button
+                  className="btn btn-block btn-outline-primary"
+                  onClick={lactatcMotherSelected}
+                  type="button"
+                  style={{ marginRight: 5 }}
+                >
+                  Add Lactatic Mother
+                </button>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="form-group">
+                <button
+                  className="btn btn-block btn-outline-primary"
+                  onClick={motherSelected}
+                  type="button"
+                >
+                  Add Mother
+                </button>
+              </div>
+            </div>
+          </div>
+          <>
+            <Formik
+              initialValues={{
+                childName: "",
+                parents_name: "",
+                child_dob: "",
+                village: "",
+                mobileno: "",
+                category: "",
+                anganwari: "",
+                gender: "male",
+                complications: "",
+                sevakutir_id: "",
+              }}
+              validationSchema={validateChild}
+              onSubmit={(values) => {
+                props.handleChildSubmit(values);
+              }}
+            >
+              {(formik) => (
+                <Form>
+                  {!successful && child && (
+                    <>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="form-group text-center">
+                            <h4>ADD CHILD</h4>
+                          </div>
+                          <hr />
                         </div>
-                        <hr/>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <TextField label="Name" name="name" type="text"/>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <TextField label="Father Name" name="fathername" type="text"/>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <TextField label="Mother Name" name="mothername" type="text"/>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="exampleInputGender">Gender</label>
-
-                          <div class="">
-                            <h6>
-                              <label
-                                class="form-check-label"
-                                for="male"
-                                style={{ paddingRight: 5 }}
-                              >
-                                Male
-                              </label>
-                              <input
-                                id="male"
-                                name="gender"
-                                type="radio"
-                                class="Radio-Input"
-                                required=""
-                                style={{ padding: 10 }}
-                              />
-
-                              <label
-                                class="form-check-label"
-                                for="female"
-                                style={{ paddingRight: 5, paddingLeft: 10 }}
-                              >
-                                Female
-                              </label>
-                              <input
-                                id="female"
-                                name="gender"
-                                type="radio"
-                                class="Radio-Input"
-                                required=""
-                              />
-
-                              <label
-                                class="form-check-label"
-                                for="other"
-                                style={{ paddingRight: 5, paddingLeft: 10 }}
-                              >
-                                Other
-                              </label>
-                              <input
-                                id="other"
-                                name="gender"
-                                type="radio"
-                                class="Radio-Input"
-                                required=""
-                              />
-                            </h6>
+                        <div className="col-md-4">
+                          <div className="form-group">
+                            <TextField
+                              label="Name"
+                              name="childName"
+                              type="text"
+                            />
                           </div>
                         </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="exampleInputVillege">
-                            Caste Category
-                          </label>
-                          <div class="form-group">
-                            <div class="">
-                              <h6>
-                                <label
-                                  class="form-check-label"
-                                  for="ur"
-                                  style={{ paddingRight: 5 }}
-                                >
-                                  UR
-                                </label>
-                                <input
-                                  id="ur"
-                                  name="gender"
-                                  type="radio"
-                                  class="Radio-Input"
-                                  required=""
-                                  style={{ padding: 10 }}
-                                />
+                        <div className="col-md-4">
+                          <div className="form-group">
+                            <TextField
+                              label="Father Name"
+                              name="parents_name"
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-4">
+                          <div className="form-group">
+                            <TextField
+                              label="DOB"
+                              name="child_dob"
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-4">
+                          <div className="form-group">
+                            <SelectionFiels
+                              name="gender"
+                              type="dropdown"
+                              label="Gender"
+                              options={gender}
+                              value={formik.values.gender}
+                              onChange={(value) =>
+                                formik.setFieldValue("gender", value.value)
+                              }
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-4">
+                          <div className="form-group">
+                            <label for="exampleInputVillege">
+                              Aanganwadi name
+                            </label>
+                            <div className="form-group">
+                              <div className="">
+                                <h6>
+                                  <label
+                                    className="form-check-label"
+                                    for="A"
+                                    style={{ paddingRight: 5 }}
+                                  >
+                                    A
+                                  </label>
+                                  <input
+                                    type="radio"
+                                    value="A"
+                                    name="anganwari"
+                                    className="Radio-Input"
+                                    style={{ padding: 10 }}
+                                  />
 
-                                <label
-                                  class="form-check-label"
-                                  for="obc"
-                                  style={{ paddingRight: 5, paddingLeft: 10 }}
-                                >
-                                  OBC
-                                </label>
-                                <input
-                                  id="obc"
-                                  name="gender"
-                                  type="radio"
-                                  class="Radio-Input"
-                                  required=""
-                                />
+                                  <label
+                                    className="form-check-label"
+                                    for="B"
+                                    style={{ paddingRight: 5, paddingLeft: 10 }}
+                                  >
+                                    B
+                                  </label>
+                                  <input
+                                    type="radio"
+                                    value="B"
+                                    name="anganwari"
+                                    className="Radio-Input"
+                                  />
 
-                                <label
-                                  class="form-check-label"
-                                  for="st"
-                                  style={{ paddingRight: 5, paddingLeft: 10 }}
-                                >
-                                  ST
-                                </label>
-                                <input
-                                  id="st"
-                                  name="gender"
-                                  type="radio"
-                                  class="Radio-Input"
-                                  required=""
-                                />
-
-                                <label
-                                  class="form-check-label"
-                                  for="sc"
-                                  style={{ paddingRight: 5, paddingLeft: 10 }}
-                                >
-                                  SC
-                                </label>
-                                <input
-                                  id="sc"
-                                  name="gender"
-                                  type="radio"
-                                  class="Radio-Input"
-                                  required=""
-                                />
-                              </h6>
+                                  <label
+                                    className="form-check-label"
+                                    for="C"
+                                    style={{ paddingRight: 5, paddingLeft: 10 }}
+                                  >
+                                    C
+                                  </label>
+                                  <input
+                                    type="radio"
+                                    value="C"
+                                    name="anganwari"
+                                    className="Radio-Input"
+                                  />
+                                </h6>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="exampleInputVillege">
-                            Aanganwadi name
-                          </label>
-                          <div class="form-group">
-                            <div class="">
-                              <h6>
-                                <label
-                                  class="form-check-label"
-                                  for="A"
-                                  style={{ paddingRight: 5 }}
-                                >
-                                  A
-                                </label>
-                                <input
-                                  id="A"
-                                  name="gender"
-                                  type="radio"
-                                  class="Radio-Input"
-                                  required=""
-                                  style={{ padding: 10 }}
-                                />
-
-                                <label
-                                  class="form-check-label"
-                                  for="B"
-                                  style={{ paddingRight: 5, paddingLeft: 10 }}
-                                >
-                                  B
-                                </label>
-                                <input
-                                  id="B"
-                                  name="gender"
-                                  type="radio"
-                                  class="Radio-Input"
-                                  required=""
-                                />
-
-                                <label
-                                  class="form-check-label"
-                                  for="C"
-                                  style={{ paddingRight: 5, paddingLeft: 10 }}
-                                >
-                                  C
-                                </label>
-                                <input
-                                  id="C"
-                                  name="gender"
-                                  type="radio"
-                                  class="Radio-Input"
-                                  required=""
-                                />
-                              </h6>
-                            </div>
+                        <div className="col-md-4">
+                          <div className="form-group">
+                            <SelectionFiels
+                              name="category"
+                              type="dropdown"
+                              label="Category"
+                              options={category}
+                              value={formik.values.category}
+                              onChange={(value) =>
+                                formik.setFieldValue("category", value.value)
+                              }
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-4">
+                          <div className="form-group">
+                            <SelectionFiels
+                              name="complications"
+                              type="dropdown"
+                              label="Complications"
+                              options={complications}
+                              value={formik.values.complications}
+                              onChange={(value) =>
+                                formik.setFieldValue(
+                                  "complications",
+                                  value.value
+                                )
+                              }
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-4">
+                          <div className="form-group">
+                            <TextField
+                              label="Mobile"
+                              name="mobileno"
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-4">
+                          <div className="form-group">
+                            <TextField
+                              label="Village"
+                              name="village"
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md-4">
+                          <div className="form-group">
+                            <SelectionFiels
+                              name="sevakutir_id"
+                              type="dropdown"
+                              label="Seva Kutir"
+                              options={sevakutir_id}
+                              value={formik.values.sevakutir_id}
+                              onChange={(value) =>
+                                formik.setFieldValue(
+                                  "sevakutir_id",
+                                  value.value
+                                )
+                              }
+                            />
                           </div>
                         </div>
                       </div>
+                      <div className="modal-footer justify-content-between">
+                        <button
+                          type="button"
+                          className="btn btn-default"
+                          data-dismiss="modal"
+                          onClick={props.handleClose}
+                        >
+                          Close
+                        </button>
+                        <button type="submit" className="btn btn-primary">
+                          Add Child
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </Form>
+              )}
+            </Formik>
+          </>
 
-                      <div class="col-md-4">
-                      <div class="form-group">
-                  <label>DOB</label>
-                  <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
-                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                        </div>
-                    </div>
-                </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="exampleInputMobileNo">Kutir</label>
-                          <select class="form-control">
-                            <option>Select Kutir</option>
-                            <option>option 2</option>
-                            <option>option 3</option>
-                            <option>option 4</option>
-                            <option>option 5</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <TextField label="Mobile No." name="mobile" type="text"/>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="exampleInputMobileNo">Complications</label>
-                          <select class="form-control">
-                            <option>Select Complications</option>
-                            <option>Normal</option>
-                            <option>Problem</option>
-                          </select>
-                        </div>
-                      </div>
-                    
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="exampleInputMobileNo">Child Age Group</label>
-                          <select class="form-control">
-                            <option>Select Child Age Group</option>
-                            <option>0 to 6 Months</option>
-                            <option>6 Month to 3 Years</option>
-                          </select>
-                        </div>
-                      </div></div>
-                      <div class="modal-footer justify-content-between">
-              <button
-                type="button"
-                class="btn btn-default"
-                data-dismiss="modal"
-                onClick={props.onHide}
+          {lactatcMother && (
+            <>
+              <Formik
+                initialValues={{
+                  lacticMotherName: "",
+                  husbandname: "",
+                  age: "",
+                  familyMembers: "",
+                  mobileno: "",
+                  category: "",
+                  complications: "",
+                  monthOfDelivery: "",
+                  anganwari: "",
+                  numberOfChild: "",
+                  sevakutir_id: "",
+                }}
+                validationSchema={validateLacticMother}
+                onSubmit={(values) => {
+                  props.handleLactaticMotherSubmit(values);
+                }}
               >
-                Close
-              </button>
-              <button type="submit" class="btn btn-primary">
-              ADD Child
-              </button>
-            </div>
-            </Form>
-          )}
-        </Formik>
-                  </>
-                )}
-
-{lactatcMother && (
-                  <>
-                                      <Formik
-        initialValues={{
-          name : '',
-          husbandname: '',
-          age: '',
-          mobile: '',
-          noofchild: '',
-          totalfamilymembers: ''
-        }}
-
-        validationSchema = {validate}
-        onSubmit = {values => {
-          console.log(values);
-        }}
-        >
-          {formik => (
-            <Form>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group text-center">
+                {(formik) => (
+                  <Form>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="form-group text-center">
                           <h4>ADD LACTATIC MOTHER</h4>
                         </div>
-                        <hr/>
+                        <hr />
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <TextField label="Name" name="name" type="text"/>
+
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField
+                            label="Name"
+                            name="lacticMotherName"
+                            type="text"
+                          />
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <TextField label="Husband Name" name="husbandname" type="text"/>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField
+                            label="Husband Name"
+                            name="husbandname"
+                            type="text"
+                          />
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <TextField label="Age" name="age" type="text"/>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField label="Age" name="age" type="text" />
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
+                      <div className="col-md-4">
+                        <div className="form-group">
                           <label for="exampleInputAge">Month of Delivery</label>
-                          <select class="form-control">
+                          <select
+                            className="form-control"
+                            name="monthOfDelivery"
+                          >
                             <option>Select Month of Delivery</option>
                             <option>1 month</option>
                             <option>2 month</option>
@@ -482,90 +456,31 @@ function AddBenegiciaryDialog(props) {
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="exampleInputVillege">
-                            Caste Category
-                          </label>
-                          <div class="form-group">
-                            <div class="">
-                              <h6>
-                                <label
-                                  class="form-check-label"
-                                  for="ur"
-                                  style={{ paddingRight: 5 }}
-                                >
-                                  UR
-                                </label>
-                                <input
-                                  id="ur"
-                                  name="gender"
-                                  type="radio"
-                                  class="Radio-Input"
-                                  required=""
-                                  style={{ padding: 10 }}
-                                />
-
-                                <label
-                                  class="form-check-label"
-                                  for="obc"
-                                  style={{ paddingRight: 5, paddingLeft: 10 }}
-                                >
-                                  OBC
-                                </label>
-                                <input
-                                  id="obc"
-                                  name="gender"
-                                  type="radio"
-                                  class="Radio-Input"
-                                  required=""
-                                />
-
-                                <label
-                                  class="form-check-label"
-                                  for="st"
-                                  style={{ paddingRight: 5, paddingLeft: 10 }}
-                                >
-                                  ST
-                                </label>
-                                <input
-                                  id="st"
-                                  name="gender"
-                                  type="radio"
-                                  class="Radio-Input"
-                                  required=""
-                                />
-
-                                <label
-                                  class="form-check-label"
-                                  for="sc"
-                                  style={{ paddingRight: 5, paddingLeft: 10 }}
-                                >
-                                  SC
-                                </label>
-                                <input
-                                  id="sc"
-                                  name="gender"
-                                  type="radio"
-                                  class="Radio-Input"
-                                  required=""
-                                />
-                              </h6>
-                            </div>
-                          </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <SelectionFiels
+                            name="category"
+                            type="dropdown"
+                            label="Category"
+                            options={category}
+                            value={formik.values.category}
+                            onChange={(value) =>
+                              formik.setFieldValue("category", value.value)
+                            }
+                          />
                         </div>
                       </div>
 
-                      <div class="col-md-4">
-                        <div class="form-group">
+                      <div className="col-md-4">
+                        <div className="form-group">
                           <label for="exampleInputVillege">
                             Aanganwadi name
                           </label>
-                          <div class="form-group">
-                            <div class="">
+                          <div className="form-group">
+                            <div className="">
                               <h6>
                                 <label
-                                  class="form-check-label"
+                                  className="form-check-label"
                                   for="A"
                                   style={{ paddingRight: 5 }}
                                 >
@@ -575,13 +490,12 @@ function AddBenegiciaryDialog(props) {
                                   id="A"
                                   name="gender"
                                   type="radio"
-                                  class="Radio-Input"
-                                  required=""
+                                  className="Radio-Input"
                                   style={{ padding: 10 }}
                                 />
 
                                 <label
-                                  class="form-check-label"
+                                  className="form-check-label"
                                   for="B"
                                   style={{ paddingRight: 5, paddingLeft: 10 }}
                                 >
@@ -591,12 +505,11 @@ function AddBenegiciaryDialog(props) {
                                   id="B"
                                   name="gender"
                                   type="radio"
-                                  class="Radio-Input"
-                                  required=""
+                                  className="Radio-Input"
                                 />
 
                                 <label
-                                  class="form-check-label"
+                                  className="form-check-label"
                                   for="C"
                                   style={{ paddingRight: 5, paddingLeft: 10 }}
                                 >
@@ -606,118 +519,146 @@ function AddBenegiciaryDialog(props) {
                                   id="C"
                                   name="gender"
                                   type="radio"
-                                  class="Radio-Input"
-                                  required=""
+                                  className="Radio-Input"
                                 />
                               </h6>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-4">
-                      <div class="form-group">
-                          <label for="exampleInputMobileNo">Kutir</label>
-                          <select class="form-control">
-                            <option>Kutir</option>
-                            <option>option 2</option>
-                            <option>option 3</option>
-                            <option>option 4</option>
-                            <option>option 5</option>
-                          </select>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <SelectionFiels
+                            name="sevakutir_id"
+                            type="dropdown"
+                            label="Seva Kutir"
+                            options={sevakutir_id}
+                            value={formik.values.sevakutir_id}
+                            onChange={(value) =>
+                              formik.setFieldValue("sevakutir_id", value.value)
+                            }
+                          />
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <TextField label="Mobile" name="mobile" type="text"/>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField
+                            label="Mobile"
+                            name="mobileno"
+                            type="text"
+                          />
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <TextField label="No. of Child" name="noofchild" type="text"/>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField
+                            label="No. of Child"
+                            name="numberOfChild"
+                            type="text"
+                          />
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <TextField label="Total Family Members" name="totalfamilymembers" type="text"/>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField
+                            label="Total Family Members"
+                            name="familyMembers"
+                            type="text"
+                          />
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="exampleInputMobileNo">Complications</label>
-                          <select class="form-control">
-                            <option>Select Complications</option>
-                            <option>Normal</option>
-                            <option>Problem</option>
-                          </select>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <SelectionFiels
+                            name="complications"
+                            type="dropdown"
+                            label="Complications"
+                            options={complications}
+                            value={formik.values.complications}
+                            onChange={(value) =>
+                              formik.setFieldValue("complications", value.value)
+                            }
+                          />
                         </div>
                       </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
-              <button
-                type="button"
-                class="btn btn-default"
-                data-dismiss="modal"
-                onClick={props.onHide}
-              >
-                Close
-              </button>
-              <button type="submit" class="btn btn-primary">
-                Add LACTATIC MOTHER
-              </button>
-            </div></Form>
-          )}
-        </Formik>
-                  </>
+
+                    <div className="modal-footer justify-content-between">
+                      <button
+                        type="button"
+                        className="btn btn-default"
+                        data-dismiss="modal"
+                        onClick={props.handleClose}
+                      >
+                        Close
+                      </button>
+                      <button type="submit" className="btn btn-primary">
+                        ADD LACTATIC MOTHER
+                      </button>
+                    </div>
+                  </Form>
                 )}
+              </Formik>
+            </>
+          )}
 
-                {mother && (
-                  <>
-                     <Formik
-        initialValues={{
-          name : '',
-          husbandname: '',
-          age: '',
-          mobile: '',
-          noofchild: '',
-          totalfamilymembers: ''
-        }}
-        
-        validationSchema = {validate}
-        onSubmit = {values => {
-          console.log(values);
-        }}
-        >
-
-        {formik => (
-          <Form>
-                    <div class="row">
-                      
-                      <div class="col-md-12">
-                        <div class="form-group text-center">
+          {mother && (
+            <>
+              <Formik
+                initialValues={{
+                  motherName: "",
+                  husband_name: "",
+                  motherAge: "",
+                  familyMembers: "",
+                  mobile: "",
+                  category: "",
+                  complications: "",
+                  monthOfPregnancy: "",
+                  anganwari: "",
+                  sevakutir_id: "",
+                  numberOfChild: "",
+                }}
+                validationSchema={validateMother}
+                onSubmit={(values) => {
+                  props.handleMotherSubmit(values);
+                }}
+              >
+                {(formik) => (
+                  <Form>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="form-group text-center">
                           <h4>ADD MOTHER</h4>
                         </div>
-                        <hr/>
+                        <hr />
                       </div>
-                    
-                      <div class="col-md-4">
-                        <div class="form-group">
-                        <TextField label="Name" name="name" type="text"/>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField
+                            label="Name"
+                            name="motherName"
+                            type="text"
+                          />
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                        <TextField label="Husband Name" name="husbandname" type="text"/>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField
+                            label="Husband Name"
+                            name="husband_name"
+                            type="text"
+                          />
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                        <TextField label="Age" name="age" type="text"/>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField label="Age" name="motherAge" type="text" />
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
+                      <div className="col-md-4">
+                        <div className="form-group">
                           <label for="exampleInputAge">Month of Delivery</label>
-                          <select class="form-control">
+                          <select className="form-control">
                             <option>Select Month of Delivery</option>
                             <option>1 month</option>
                             <option>2 month</option>
@@ -734,90 +675,31 @@ function AddBenegiciaryDialog(props) {
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="exampleInputVillege">
-                            Caste Category
-                          </label>
-                          <div class="form-group">
-                            <div class="">
-                              <h6>
-                                <label
-                                  class="form-check-label"
-                                  for="ur"
-                                  style={{ paddingRight: 5 }}
-                                >
-                                  UR
-                                </label>
-                                <input
-                                  id="ur"
-                                  name="gender"
-                                  type="radio"
-                                  class="Radio-Input"
-                                  required=""
-                                  style={{ padding: 10 }}
-                                />
-
-                                <label
-                                  class="form-check-label"
-                                  for="obc"
-                                  style={{ paddingRight: 5, paddingLeft: 10 }}
-                                >
-                                  OBC
-                                </label>
-                                <input
-                                  id="obc"
-                                  name="gender"
-                                  type="radio"
-                                  class="Radio-Input"
-                                  required=""
-                                />
-
-                                <label
-                                  class="form-check-label"
-                                  for="st"
-                                  style={{ paddingRight: 5, paddingLeft: 10 }}
-                                >
-                                  ST
-                                </label>
-                                <input
-                                  id="st"
-                                  name="gender"
-                                  type="radio"
-                                  class="Radio-Input"
-                                  required=""
-                                />
-
-                                <label
-                                  class="form-check-label"
-                                  for="sc"
-                                  style={{ paddingRight: 5, paddingLeft: 10 }}
-                                >
-                                  SC
-                                </label>
-                                <input
-                                  id="sc"
-                                  name="gender"
-                                  type="radio"
-                                  class="Radio-Input"
-                                  required=""
-                                />
-                              </h6>
-                            </div>
-                          </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <SelectionFiels
+                            name="category"
+                            type="dropdown"
+                            label="Category"
+                            options={category}
+                            value={formik.values.category}
+                            onChange={(value) =>
+                              formik.setFieldValue("category", value.value)
+                            }
+                          />
                         </div>
                       </div>
 
-                      <div class="col-md-4">
-                        <div class="form-group">
+                      <div className="col-md-4">
+                        <div className="form-group">
                           <label for="exampleInputVillege">
                             Aanganwadi name
                           </label>
-                          <div class="form-group">
-                            <div class="">
+                          <div className="form-group">
+                            <div className="">
                               <h6>
                                 <label
-                                  class="form-check-label"
+                                  className="form-check-label"
                                   for="A"
                                   style={{ paddingRight: 5 }}
                                 >
@@ -827,13 +709,12 @@ function AddBenegiciaryDialog(props) {
                                   id="A"
                                   name="gender"
                                   type="radio"
-                                  class="Radio-Input"
-                                  required=""
+                                  className="Radio-Input"
                                   style={{ padding: 10 }}
                                 />
 
                                 <label
-                                  class="form-check-label"
+                                  className="form-check-label"
                                   for="B"
                                   style={{ paddingRight: 5, paddingLeft: 10 }}
                                 >
@@ -843,12 +724,11 @@ function AddBenegiciaryDialog(props) {
                                   id="B"
                                   name="gender"
                                   type="radio"
-                                  class="Radio-Input"
-                                  required=""
+                                  className="Radio-Input"
                                 />
 
                                 <label
-                                  class="form-check-label"
+                                  className="form-check-label"
                                   for="C"
                                   style={{ paddingRight: 5, paddingLeft: 10 }}
                                 >
@@ -858,74 +738,85 @@ function AddBenegiciaryDialog(props) {
                                   id="C"
                                   name="gender"
                                   type="radio"
-                                  class="Radio-Input"
-                                  required=""
+                                  className="Radio-Input"
                                 />
                               </h6>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-4">
-                      <div class="form-group">
-                          <label for="exampleInputMobileNo">Kutir</label>
-                          <select class="form-control">
-                            <option>Kutir</option>
-                            <option>option 2</option>
-                            <option>option 3</option>
-                            <option>option 4</option>
-                            <option>option 5</option>
-                          </select>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <SelectionFiels
+                            name="sevakutir_id"
+                            type="dropdown"
+                            label="Seva Kutir"
+                            options={sevakutir_id}
+                            value={formik.values.sevakutir_id}
+                            onChange={(value) =>
+                              formik.setFieldValue("sevakutir_id", value.value)
+                            }
+                          />
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                        <TextField label="Mobile" name="mobile" type="text"/>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField label="Mobile" name="mobile" type="text" />
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <TextField label="No. of Child" name="noofchild" type="text"/>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField
+                            label="No. of Child"
+                            name="numberOfChild"
+                            type="text"
+                          />
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group"> 
-                        <TextField label="Total Family Members" name="totalfamilymembers" type="text"/>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField
+                            label="Total Family Members"
+                            name="familyMembers"
+                            type="text"
+                          />
                         </div>
                       </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="exampleInputMobileNo">Complications</label>
-                          <select class="form-control">
-                            <option>Select Complications</option>
-                            <option>Normal</option>
-                            <option>Problem</option>
-                          </select>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <SelectionFiels
+                            name="complications"
+                            type="dropdown"
+                            label="Complications"
+                            options={complications}
+                            value={formik.values.complications}
+                            onChange={(value) =>
+                              formik.setFieldValue("complications", value.value)
+                            }
+                          />
                         </div>
                       </div>
                     </div>
-                    
-            <div class="modal-footer justify-content-between">
-              <button
-                type="button"
-                class="btn btn-default"
-                data-dismiss="modal"
-                onClick={props.onHide}
-              >
-                Close
-              </button>
-              <button type="submit" class="btn btn-primary">
-              ADD MOTHER
-              </button>
-            </div></Form>
-          )}
-        </Formik>
-                  </>
+                    <div className="modal-footer justify-content-between">
+                      <button
+                        type="button"
+                        className="btn btn-default"
+                        data-dismiss="modal"
+                        onClick={props.handleClose}
+                      >
+                        Close
+                      </button>
+                      <button type="submit" className="btn btn-primary">
+                        Add MOTHER
+                      </button>
+                    </div>
+                  </Form>
                 )}
-</div>
-          </div>
-        </div>
-      </div>
+              </Formik>
+            </>
+          )}
+        </Modal.Body>
+      </Modal>
     </>
   );
 }

@@ -11,51 +11,51 @@ function Header() {
   };
 
   return (
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button">
-            <i class="fas fa-bars"></i>
+    <nav className="main-header navbar navbar-expand navbar-white navbar-light">
+      <ul className="navbar-nav">
+        <li className="nav-item">
+          <a className="nav-link" data-widget="pushmenu" href="#" role="button">
+            <i className="fas fa-bars"></i>
           </a>
         </li>
       </ul>
 
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
+      <ul className="navbar-nav ml-auto">
+        <li className="nav-item dropdown">
+          <a className="nav-link" data-toggle="dropdown" href="#">
             <img
               src="dist/img/side-menu/bell.png"
               className="img-size-32"
               alt="home"
             />
-            <span class="badge badge-primary navbar-badge">0</span>
+            <span className="badge badge-primary navbar-badge">0</span>
           </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-item dropdown-header">15 Notifications</span>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-envelope mr-2"></i> 4 new messages
-              <span class="float-right text-muted text-sm">3 mins</span>
+          <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <span className="dropdown-item dropdown-header">15 Notifications</span>
+            <div className="dropdown-divider"></div>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
             </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-users mr-2"></i> 8 friend requests
-              <span class="float-right text-muted text-sm">12 hours</span>
+            <div className="dropdown-divider"></div>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-users mr-2"></i> 8 friend requests
+              <span className="float-right text-muted text-sm">12 hours</span>
             </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-file mr-2"></i> 3 new reports
-              <span class="float-right text-muted text-sm">2 days</span>
+            <div className="dropdown-divider"></div>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-file mr-2"></i> 3 new reports
+              <span className="float-right text-muted text-sm">2 days</span>
             </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">
+            <div className="dropdown-divider"></div>
+            <a href="#" className="dropdown-item dropdown-footer">
               See All Notifications
             </a>
           </div>
         </li>
-        <li class="nav-item dropdown">
+        <li className="nav-item dropdown">
           <a
-            class="nav-link"
+            className="nav-link"
             data-widget="control-sidebar"
             data-slide="true"
             href="#"
@@ -65,32 +65,32 @@ function Header() {
             <img
               src="dist/img/user1-128x128.jpg"
               alt="User Avatar"
-              class="img-size-32 mr-3 img-circle"
+              className="img-size-32 mr-3 img-circle"
             />
           </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <div class=" card-primary card-outline">
-              <div class="card-body box-profile">
-                <div class="text-center">
+          <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <div className=" card-primary card-outline">
+              <div className="card-body box-profile">
+                <div className="text-center">
                   <img
-                    class="profile-user-img img-fluid img-circle"
+                    className="profile-user-img img-fluid img-circle"
                     src="../../dist/img/user4-128x128.jpg"
                     alt="User profile picture"
                   />
                 </div>
 
-                <h3 class="profile-username text-center">
+                <h3 className="profile-username text-center">
                   {currentUser.employee.name}
                 </h3>
 
-                <p class="text-muted text-center">
+                <p className="text-muted text-center">
                   {currentUser.employee.email}
                 </p>
 
-                <ul class="list-group list-group-unbordered mb-3">
-                  <li class="list-group-item">
+                <ul className="list-group list-group-unbordered mb-3">
+                  <li className="list-group-item">
                     <b>Mobile</b>{" "}
-                    <a class="float-right">
+                    <a className="float-right">
                       +91 {currentUser.employee.mobileno}
                     </a>
                   </li>
@@ -98,7 +98,7 @@ function Header() {
 
                 <a
                   href="/login"
-                  class="btn btn-primary btn-block"
+                  className="btn btn-primary btn-block"
                   onClick={logOut}
                 >
                   <b>Log Out</b>

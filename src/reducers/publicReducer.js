@@ -25,10 +25,8 @@ const usersReducers = (state = initialState, action) => {
                 districts: action.payload,
                 loading: false,
             }
-
             default: 
             return state;
     }
 };
-
 export default usersReducers;

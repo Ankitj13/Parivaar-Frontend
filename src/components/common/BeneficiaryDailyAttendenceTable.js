@@ -28,7 +28,7 @@ function BeneficiaryDailyAttendenceTable() {
     }
   };
   return (
-    <table class="table table-hover text-nowrap">
+    <table className="table table-hover text-nowrap">
       <thead>
         <tr>
           <th style={{width:0}}>S.No.</th>
@@ -42,16 +42,16 @@ function BeneficiaryDailyAttendenceTable() {
           >
             Name
           </th>
-          <th class="text-center">
+          <th className="text-center">
             <img
               src="dist/img/icon/meal.png"
               alt="Vaccine"
-              class="img-size-32"
+              className="img-size-32"
             />
             <p style={{ fontSize: 12 }}>Meals</p>
-            <div class="form-check" style={{ paddingBottom: 15 }}>
+            <div className="form-check" style={{ paddingBottom: 15 }}>
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="checkbox"
                 name="allSelect"
                 checked={employees.filter((employee) => employee?.isChecked !== true).length < 1}
@@ -59,48 +59,48 @@ function BeneficiaryDailyAttendenceTable() {
               />
             </div>
           </th>
-          <th class="text-center">
+          <th className="text-center">
             <img
               src="dist/img/icon/milk.png"
               alt="Vaccine"
-              class="img-size-32"
+              className="img-size-32"
             />
             <p style={{ fontSize: 12 }}>Milk</p>
-            <div class="form-check" style={{ paddingBottom: 15 }}>
-              <input class="form-check-input" type="checkbox" />
+            <div className="form-check" style={{ paddingBottom: 15 }}>
+              <input className="form-check-input" type="checkbox" />
             </div>
           </th>
-          <th class="text-center">
+          <th className="text-center">
             <img
               src="dist/img/icon/protein.png"
               alt="Vaccine"
-              class="img-size-32"
+              className="img-size-32"
             />
             <p style={{ fontSize: 12 }}>Fruits</p>
-            <div class="form-check" style={{ paddingBottom: 15 }}>
-              <input class="form-check-input" type="checkbox" checked />
+            <div className="form-check" style={{ paddingBottom: 15 }}>
+              <input className="form-check-input" type="checkbox" checked />
             </div>
           </th>
-          <th class="text-center">
+          <th className="text-center">
             <img
               src="dist/img/icon/vitamin.png"
               alt="Vaccine"
-              class="img-size-32"
+              className="img-size-32"
             />
             <p style={{ fontSize: 12 }}>Vitamin</p>
-            <div class="form-check" style={{ paddingBottom: 15 }}>
-              <input class="form-check-input" type="checkbox" />
+            <div className="form-check" style={{ paddingBottom: 15 }}>
+              <input className="form-check-input" type="checkbox" />
             </div>
           </th>
-          <th class="text-center">
+          <th className="text-center">
             <img
               src="dist/img/icon/calcium.png"
               alt="Vaccine"
-              class="img-size-32"
+              className="img-size-32"
             />
             <p style={{ fontSize: 12 }}>Calcium</p>
-            <div class="form-check" style={{ paddingBottom: 15 }}>
-              <input class="form-check-input" type="checkbox" />
+            <div className="form-check" style={{ paddingBottom: 15 }}>
+              <input className="form-check-input" type="checkbox" />
             </div>
           </th>
         </tr>
@@ -118,13 +118,13 @@ function BeneficiaryDailyAttendenceTable() {
                   zIndex: 1,
                 }}
               >
-                {employee.name} {employee.fathername}
+                {employee.childName} {employee.parents_name}
               </td>
-              <td class="text-center">
-                <div class="form-group">
-                  <div class="form-check">
+              <td className="text-center">
+                <div className="form-group">
+                  <div className="form-check">
                     <input
-                      class="form-check-input"
+                      className="form-check-input"
                       type="checkbox"
                       name={employee.name}
                       checked={employee?.isChecked || false}
@@ -133,31 +133,31 @@ function BeneficiaryDailyAttendenceTable() {
                   </div>
                 </div>
               </td>
-              <td class="text-center">
-                <div class="form-group">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" />
+              <td className="text-center">
+                <div className="form-group">
+                  <div className="form-check">
+                    <input className="form-check-input" type="checkbox" />
                   </div>
                 </div>
               </td>
-              <td class="text-center">
-                <div class="form-group">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" />
+              <td className="text-center">
+                <div className="form-group">
+                  <div className="form-check">
+                    <input className="form-check-input" type="checkbox" />
                   </div>
                 </div>
               </td>
-              <td class="text-center">
-                <div class="form-group">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" />
+              <td className="text-center">
+                <div className="form-group">
+                  <div className="form-check">
+                    <input className="form-check-input" type="checkbox" />
                   </div>
                 </div>
               </td>
-              <td class="text-center">
-                <div class="form-group">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" />
+              <td className="text-center">
+                <div className="form-group">
+                  <div className="form-check">
+                    <input className="form-check-input" type="checkbox" />
                   </div>
                 </div>
               </td>

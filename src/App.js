@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import "./App.css";
 import Header from "./components/include/Header";
 import Siderbar from "./components/include/Siderbar";

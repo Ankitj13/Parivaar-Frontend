@@ -4,6 +4,8 @@ import {
   LOGOUT,
   ADD_MEMBER_SUCCESS,
   ADD_MEMBER_FAIL,
+  ADD_CHILD_SUCCESS,
+  ADD_CHILD_FAIL
 }  from "../actions/types";
   
   const user = JSON.parse(localStorage.getItem("user"));
@@ -44,6 +46,16 @@ import {
           isLoggedIn: false,
           user: null,
         };
+      case ADD_CHILD_SUCCESS:
+        return {
+          ...state,
+          isLoggedIn: false,
+        };
+      case ADD_CHILD_FAIL:
+        return {
+          ...state,
+          isLoggedIn: false,
+        }
       default:
         return state;
     }

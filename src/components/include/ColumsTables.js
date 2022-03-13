@@ -1,8 +1,4 @@
 export const  EmployeeTable = [
-    // {
-    //     Header: 'S.no',
-    //     accessor: {0}
-    // },
     {
         Header: 'Name',
         accessor: 'name'
@@ -12,15 +8,7 @@ export const  EmployeeTable = [
         accessor: 'email'
     },
     {
-        Header: 'Village',
-        accessor: 'village'
-    },
-    {
         Header: 'Mobile',
         accessor: 'mobileno'
     },
-    {
-        Header: 'Role',
-        accessor: 'roles.name'
-    }
 ]

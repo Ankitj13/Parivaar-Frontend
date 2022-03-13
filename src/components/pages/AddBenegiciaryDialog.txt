@@ -1,0 +1,929 @@
+import React, { useState } from "react";
+import { Formik, Form } from "formik";
+import { TextField } from "../fileds/TextField";
+import * as Yup from "yup";
+import { Modal } from "react-bootstrap";
+
+function AddBenegiciaryDialog(props) {
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
+  const validate = Yup.object({
+    childName: Yup.string()
+      .max(20, "Must be max 20 characters or min 3")
+      .min(3, "Must be min 3 characters or max 20")
+      .required("This filed is required"),
+    parents_name: Yup.string()
+      .max(20, "Must be 20 characters or less then 3")
+      .min(3, "Must be min 3 characters or max 20")
+      .required("This filed is required"),
+    mobileno: Yup.string()
+      .matches(phoneRegExp, "Phone number is not valid")
+      .required("This filed is required"),
+    village: Yup.string()
+      .required("This filed is required"),
+    child_dob: Yup.string()
+      .required("This filed is required"),
+    category: Yup.string()
+      .required("This filed is required"),
+    gender: Yup.string()
+      .required("This filed is required"),
+  });
+  const [child, setChild] = useState(false);
+  const [mother, setMother] = useState(false);
+  const [lactatcMother, setLactatcMother] = useState(false);
+
+  const [selectedValue, setSelectedValue] = useState();
+  const [successful, setSuccessful] = useState(false);
+
+  const handleChange = (e) => {
+    setSelectedValue(e.value);
+    console.log(e.value);
+  };
+  const chiledSelected = () => {
+    setChild(true);
+    setMother(false);
+    setLactatcMother(false);
+  };
+  const motherSelected = () => {
+    setMother(true);
+    setChild(false);
+    setLactatcMother(false);
+  };
+  const lactatcMotherSelected = () => {
+    setMother(false);
+    setChild(false);
+    setLactatcMother(true);
+  };
+
+  return (
+    <>
+      <Modal
+        {...props}
+        show={props.show}
+        onHide={props.handleClose}
+        backdrop="static"
+        keyboard={false}
+        size="lg"
+      >
+        <Modal.Header>
+          <Modal.Title>ADD BENEFICIARY </Modal.Title>
+          <button type="button" className="close" onClick={props.handleClose}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </Modal.Header>
+
+        <Modal.Body>
+          <div className="row">
+            <div className="col-md-4">
+              <div className="form-group">
+                <button
+                  className="btn btn-block btn-outline-primary"
+                  onClick={chiledSelected}
+                  type="button"
+                  style={{ marginRight: 5 }}
+                >
+                  Add Child
+                </button>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="form-group">
+                <button
+                  className="btn btn-block btn-outline-primary"
+                  onClick={lactatcMotherSelected}
+                  type="button"
+                  style={{ marginRight: 5 }}
+                >
+                  Add Lactatic Mother
+                </button>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="form-group">
+                <button
+                  className="btn btn-block btn-outline-primary"
+                  onClick={motherSelected}
+                  type="button"
+                >
+                  Add Mother
+                </button>
+              </div>
+            </div>
+          </div>
+            <>
+            <Formik
+              initialValues={{
+                childName: "",
+                parents_name: "",
+                child_dob: "",
+                village: "",
+                mobileno: "",
+                category: "",
+                anganwari: "",
+                gender: "",
+                complications: ""
+              }}
+              validationSchema={validate}
+              onSubmit={(values) => {
+                console.log(values)
+              }}
+            >
+              {(formik) => (
+                <Form>
+                   {!successful && ( child && (
+                    <>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="form-group text-center">
+                        <h4>ADD CHILD</h4>
+                      </div>
+                      <hr />
+                    </div>
+                    <div className="col-md-4">
+                      <div className="form-group">
+                       <TextField label="Name" name="childName" type="text" />
+                      </div>
+                    </div>
+                    <div className="col-md-4">
+                      <div className="form-group">
+                        <TextField
+                          label="Father Name"
+                          name="parents_name"
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-4">
+                      <div className="form-group">
+                        <TextField label="DOB" name="child_dob" type="text" />
+                      </div>
+                    </div>
+                    <div className="col-md-4">
+                      <div className="form-group">
+                        <label for="exampleInputVillege">
+                         Gender
+                        </label>
+                        <div className="form-group">
+                          <div className="">
+                            <h6>
+                              <label
+                                className="form-check-label"
+                                for="male"
+                                style={{ paddingRight: 5 }}
+                              >
+                                Male
+                              </label>
+                              <input
+                                value="male"
+                                name="gender"
+                                type="radio"
+                                className="Radio-Input"
+                                required=""
+                                style={{ padding: 10 }}
+                              />
+
+                              <label
+                                className="form-check-label"
+                                for="female"
+                                style={{ paddingRight: 5, paddingLeft: 10 }}
+                              >
+                                Female
+                              </label>
+                              <input
+                                value="female"
+                                name="gender"
+                                type="radio"
+                                className="Radio-Input"
+                                required=""
+                              />
+
+                              <label
+                                className="form-check-label"
+                                for="other"
+                                style={{ paddingRight: 5, paddingLeft: 10 }}
+                              >
+                                Other
+                              </label>
+                              <input
+                                value="other"
+                                name="gender"
+                                type="radio"
+                                className="Radio-Input"
+                                required=""
+                              />
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-4">
+                      <div className="form-group">
+                        <label for="exampleInputVillege">
+                          Caste Category
+                        </label>
+                        <div className="form-group">
+                          <div className="">
+                            <h6>
+                              <label
+                                className="form-check-label"
+                                for="ur"
+                                style={{ paddingRight: 5 }}
+                              >
+                                UR
+                              </label>
+                              <input
+                                value="ur"
+                                name="category"
+                                type="radio"
+                                className="Radio-Input"
+                                required=""
+                                style={{ padding: 10 }}
+                              />
+
+                              <label
+                                className="form-check-label"
+                                for="obc"
+                                style={{ paddingRight: 5, paddingLeft: 10 }}
+                              >
+                                OBC
+                              </label>
+                              <input
+                                value="obc"
+                                name="category"
+                                type="radio"
+                                className="Radio-Input"
+                                required=""
+                              />
+
+                              <label
+                                className="form-check-label"
+                                for="st"
+                                style={{ paddingRight: 5, paddingLeft: 10 }}
+                              >
+                                ST
+                              </label>
+                              <input
+                                value="st"
+                                name="category"
+                                type="radio"
+                                className="Radio-Input"
+                                required=""
+                              />
+
+                              <label
+                                className="form-check-label"
+                                for="sc"
+                                style={{ paddingRight: 5, paddingLeft: 10 }}
+                              >
+                                SC
+                              </label>
+                              <input
+                                value="sc"
+                                name="category"
+                                type="radio"
+                                className="Radio-Input"
+                                required=""
+                              />
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-md-4">
+                      <div className="form-group">
+                        <label for="exampleInputVillege">
+                          Aanganwadi name
+                        </label>
+                        <div className="form-group">
+                          <div className="">
+                            <h6>
+                              <label
+                                className="form-check-label"
+                                for="A"
+                                style={{ paddingRight: 5 }}
+                              >
+                                A
+                              </label>
+                              <input
+                                value="A"
+                                name="anganwari"
+                                type="radio"
+                                className="Radio-Input"
+                                required=""
+                                style={{ padding: 10 }}
+                              />
+
+                              <label
+                                className="form-check-label"
+                                for="B"
+                                style={{ paddingRight: 5, paddingLeft: 10 }}
+                              >
+                                B
+                              </label>
+                              <input
+                                value="B"
+                                name="anganwari"
+                                type="radio"
+                                className="Radio-Input"
+                                required=""
+                              />
+
+                              <label
+                                className="form-check-label"
+                                for="C"
+                                style={{ paddingRight: 5, paddingLeft: 10 }}
+                              >
+                                C
+                              </label>
+                              <input
+                                value="C"
+                                name="anganwari"
+                                type="radio"
+                                className="Radio-Input"
+                                required=""
+                              />
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-4">
+                      <div className="form-group">
+                        <label for="exampleInputMobileNo">Complications</label>
+                        <select className="form-control" name="complications">
+                          <option>complications</option>
+                          <option>option 2</option>
+                          <option>option 3</option>
+                          <option>option 4</option>
+                          <option>option 5</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="col-md-4">
+                      <div className="form-group">
+                        <TextField label="Mobile" name="mobileno" type="text" />
+                      </div>
+                    </div>
+                    <div className="col-md-4">
+                      <div className="form-group">
+                        <TextField label="Village" name="village" type="text" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="modal-footer justify-content-between">
+                    <button
+                      type="button"
+                      className="btn btn-default"
+                      data-dismiss="modal"
+                      onClick={props.handleClose}
+                    >
+                      Close
+                    </button>
+                    <button  className="btn btn-primary" onClick={alert('Hiiiiiii')}>
+                      Add Child
+                    </button>
+                  </div>
+                  </>
+                    ) )}
+                </Form>
+              )}
+            </Formik>
+          </>
+          
+
+          {lactatcMother && (
+            <>
+              <Formik
+                initialValues={{
+                  name: "",
+                  husbandname: "",
+                  age: "",
+                  mobile: "",
+                  noofchild: "",
+                  totalfamilymembers: "",
+                }}
+                validationSchema={validate}
+                onSubmit={(values) => {
+                  console.log(values);
+                }}
+              >
+                {(formik) => (
+                  <Form>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="form-group text-center">
+                          <h4>ADD LACTATIC MOTHER</h4>
+                        </div>
+                        <hr />
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                         <TextField label="Name" name="name" type="text" />
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField
+                            label="Husband Name"
+                            name="husbandname"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField label="Age" name="age" type="text" />
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <label for="exampleInputAge">Month of Delivery</label>
+                          <select className="form-control">
+                            <option>Select Month of Delivery</option>
+                            <option>1 month</option>
+                            <option>2 month</option>
+                            <option>3 month</option>
+                            <option>4 month</option>
+                            <option>5 month</option>
+                            <option>6 month</option>
+                            <option>7 month</option>
+                            <option>8 month</option>
+                            <option>9 month</option>
+                            <option>10 month</option>
+                            <option>11 month</option>
+                            <option>12 month</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <label for="exampleInputVillege">
+                            Caste Category
+                          </label>
+                          <div className="form-group">
+                            <div className="">
+                              <h6>
+                                <label
+                                  className="form-check-label"
+                                  for="ur"
+                                  style={{ paddingRight: 5 }}
+                                >
+                                  UR
+                                </label>
+                                <input
+                                  id="ur"
+                                  name="gender"
+                                  type="radio"
+                                  className="Radio-Input"
+                                  required=""
+                                  style={{ padding: 10 }}
+                                />
+
+                                <label
+                                  className="form-check-label"
+                                  for="obc"
+                                  style={{ paddingRight: 5, paddingLeft: 10 }}
+                                >
+                                  OBC
+                                </label>
+                                <input
+                                  id="obc"
+                                  name="gender"
+                                  type="radio"
+                                  className="Radio-Input"
+                                  required=""
+                                />
+
+                                <label
+                                  className="form-check-label"
+                                  for="st"
+                                  style={{ paddingRight: 5, paddingLeft: 10 }}
+                                >
+                                  ST
+                                </label>
+                                <input
+                                  id="st"
+                                  name="gender"
+                                  type="radio"
+                                  className="Radio-Input"
+                                  required=""
+                                />
+
+                                <label
+                                  className="form-check-label"
+                                  for="sc"
+                                  style={{ paddingRight: 5, paddingLeft: 10 }}
+                                >
+                                  SC
+                                </label>
+                                <input
+                                  id="sc"
+                                  name="gender"
+                                  type="radio"
+                                  className="Radio-Input"
+                                  required=""
+                                />
+                              </h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <label for="exampleInputVillege">
+                            Aanganwadi name
+                          </label>
+                          <div className="form-group">
+                            <div className="">
+                              <h6>
+                                <label
+                                  className="form-check-label"
+                                  for="A"
+                                  style={{ paddingRight: 5 }}
+                                >
+                                  A
+                                </label>
+                                <input
+                                  id="A"
+                                  name="gender"
+                                  type="radio"
+                                  className="Radio-Input"
+                                  required=""
+                                  style={{ padding: 10 }}
+                                />
+
+                                <label
+                                  className="form-check-label"
+                                  for="B"
+                                  style={{ paddingRight: 5, paddingLeft: 10 }}
+                                >
+                                  B
+                                </label>
+                                <input
+                                  id="B"
+                                  name="gender"
+                                  type="radio"
+                                  className="Radio-Input"
+                                  required=""
+                                />
+
+                                <label
+                                  className="form-check-label"
+                                  for="C"
+                                  style={{ paddingRight: 5, paddingLeft: 10 }}
+                                >
+                                  C
+                                </label>
+                                <input
+                                  id="C"
+                                  name="gender"
+                                  type="radio"
+                                  className="Radio-Input"
+                                  required=""
+                                />
+                              </h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <label for="exampleInputMobileNo">Kutir</label>
+                          <select className="form-control">
+                            <option>Kutir</option>
+                            <option>option 2</option>
+                            <option>option 3</option>
+                            <option>option 4</option>
+                            <option>option 5</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField label="Mobile" name="mobile" type="text" />
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField
+                            label="No. of Child"
+                            name="noofchild"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField
+                            label="Total Family Members"
+                            name="totalfamilymembers"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <label for="exampleInputMobileNo">
+                            Complications
+                          </label>
+                          <select className="form-control">
+                            <option>Select Complications</option>
+                            <option>Normal</option>
+                            <option>Problem</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="modal-footer justify-content-between">
+                      <button
+                        type="button"
+                        className="btn btn-default"
+                        data-dismiss="modal"
+                        onClick={props.handleClose}
+                      >
+                        Close
+                      </button>
+                      <button type="submit" className="btn btn-primary">
+                        Add LACTATIC MOTHER
+                      </button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </>
+          )}
+
+          {mother && (
+            <>
+              <Formik
+                initialValues={{
+                  name: "",
+                  husbandname: "",
+                  age: "",
+                  mobile: "",
+                  noofchild: "",
+                  totalfamilymembers: "",
+                }}
+                validationSchema={validate}
+                onSubmit={(values) => {
+                  console.log(values);
+                }}
+              >
+                {(formik) => (
+                  <Form>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="form-group text-center">
+                          <h4>ADD MOTHER</h4>
+                        </div>
+                        <hr />
+                      </div>
+
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField label="Name" name="name" type="text" />
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField
+                            label="Husband Name"
+                            name="husbandname"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField label="Age" name="age" type="text" />
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <label for="exampleInputAge">Month of Delivery</label>
+                          <select className="form-control">
+                            <option>Select Month of Delivery</option>
+                            <option>1 month</option>
+                            <option>2 month</option>
+                            <option>3 month</option>
+                            <option>4 month</option>
+                            <option>5 month</option>
+                            <option>6 month</option>
+                            <option>7 month</option>
+                            <option>8 month</option>
+                            <option>9 month</option>
+                            <option>10 month</option>
+                            <option>11 month</option>
+                            <option>12 month</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <label for="exampleInputVillege">
+                            Caste Category
+                          </label>
+                          <div className="form-group">
+                            <div className="">
+                              <h6>
+                                <label
+                                  className="form-check-label"
+                                  for="ur"
+                                  style={{ paddingRight: 5 }}
+                                >
+                                  UR
+                                </label>
+                                <input
+                                  id="ur"
+                                  name="gender"
+                                  type="radio"
+                                  className="Radio-Input"
+                                  required=""
+                                  style={{ padding: 10 }}
+                                />
+
+                                <label
+                                  className="form-check-label"
+                                  for="obc"
+                                  style={{ paddingRight: 5, paddingLeft: 10 }}
+                                >
+                                  OBC
+                                </label>
+                                <input
+                                  id="obc"
+                                  name="gender"
+                                  type="radio"
+                                  className="Radio-Input"
+                                  required=""
+                                />
+
+                                <label
+                                  className="form-check-label"
+                                  for="st"
+                                  style={{ paddingRight: 5, paddingLeft: 10 }}
+                                >
+                                  ST
+                                </label>
+                                <input
+                                  id="st"
+                                  name="gender"
+                                  type="radio"
+                                  className="Radio-Input"
+                                  required=""
+                                />
+
+                                <label
+                                  className="form-check-label"
+                                  for="sc"
+                                  style={{ paddingRight: 5, paddingLeft: 10 }}
+                                >
+                                  SC
+                                </label>
+                                <input
+                                  id="sc"
+                                  name="gender"
+                                  type="radio"
+                                  className="Radio-Input"
+                                  required=""
+                                />
+                              </h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <label for="exampleInputVillege">
+                            Aanganwadi name
+                          </label>
+                          <div className="form-group">
+                            <div className="">
+                              <h6>
+                                <label
+                                  className="form-check-label"
+                                  for="A"
+                                  style={{ paddingRight: 5 }}
+                                >
+                                  A
+                                </label>
+                                <input
+                                  id="A"
+                                  name="gender"
+                                  type="radio"
+                                  className="Radio-Input"
+                                  required=""
+                                  style={{ padding: 10 }}
+                                />
+
+                                <label
+                                  className="form-check-label"
+                                  for="B"
+                                  style={{ paddingRight: 5, paddingLeft: 10 }}
+                                >
+                                  B
+                                </label>
+                                <input
+                                  id="B"
+                                  name="gender"
+                                  type="radio"
+                                  className="Radio-Input"
+                                  required=""
+                                />
+
+                                <label
+                                  className="form-check-label"
+                                  for="C"
+                                  style={{ paddingRight: 5, paddingLeft: 10 }}
+                                >
+                                  C
+                                </label>
+                                <input
+                                  id="C"
+                                  name="gender"
+                                  type="radio"
+                                  className="Radio-Input"
+                                  required=""
+                                />
+                              </h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <label for="exampleInputMobileNo">Kutir</label>
+                          <select className="form-control">
+                            <option>Kutir</option>
+                            <option>option 2</option>
+                            <option>option 3</option>
+                            <option>option 4</option>
+                            <option>option 5</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField label="Mobile" name="mobile" type="text" />
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField
+                            label="No. of Child"
+                            name="noofchild"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <TextField
+                            label="Total Family Members"
+                            name="totalfamilymembers"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-4">
+                        <div className="form-group">
+                          <label for="exampleInputMobileNo">
+                            Complications
+                          </label>
+                          <select className="form-control">
+                            <option>Select Complications</option>
+                            <option>Normal</option>
+                            <option>Problem</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="modal-footer justify-content-between">
+                      <button
+                        type="button"
+                        className="btn btn-default"
+                        data-dismiss="modal"
+                        onClick={props.handleClose}
+                      >
+                        Close
+                      </button>
+                      <button type="submit" className="btn btn-primary">
+                        ADD MOTHER
+                      </button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </>
+          )}
+        </Modal.Body>
+      </Modal>
+    </>
+  );
+}
+
+export default AddBenegiciaryDialog;

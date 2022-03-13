@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import { TextField } from "../fileds/TextField";
 import { SelectionFiels } from "../fileds/SelectionFiels"; 
 import * as Yup from "yup";
@@ -18,13 +18,14 @@ const validate = Yup.object({
     .required("This filed is required"),
   mobileno: Yup.string()
     .matches(phoneRegExp, "Phone number is not valid")
-    .max(10, "Must be 10 characters")
-    .min(10, "Must be 10 characters")
+    .max(10, "Must be 10 number")
+    .min(10, "Must be 10 number")
     .required("This filed is required"),
   village: Yup.string()
     .required("This filed is required"),
   password: Yup.string()
-    .required("This filed is required"),
+    .required("This filed is required")
+    .min(6, "Password should have at least 6 character"),
   role_id: Yup.string().required("This filed is required"),
 });
 
@@ -37,6 +38,9 @@ const options = [
 function AddMember(props) {
   const { user: currentUser } = useSelector((state) => state.auth);
   const [successful, setSuccessful] = useState(false);
+  const { message } = useSelector((state) => state.message);
+  const [loading, setLoading] = useState(false);
+
   if (!currentUser) {
     return <Redirect to="/login" />;
   }
@@ -53,13 +57,11 @@ function AddMember(props) {
         size="lg"
       >
         <Modal.Header>
-                           
           <Modal.Title>Add Member</Modal.Title>
-          <button type="button" class="close" onClick={props.handleClose}>
+          <button type="button" className="close" onClick={props.handleClose}>
                 <span aria-hidden="true">&times;</span>
               </button>
         </Modal.Header>
-
             <Formik
               initialValues={{
                 name: "",
@@ -79,40 +81,43 @@ function AddMember(props) {
                   {!successful && (
                     <>
                       <Modal.Body>
-                        <div class="row">
-                          <div class="col-md-6">
+                        <div className="row">
+                          <div className="col-md-6">
                             <TextField label="Name" name="name" type="text" />
                           </div>
-                          <div class="col-md-6">
+                          <div className="col-md-6">
+                            <div className="form-group">
                             <TextField
                               label="Email"
                               name="email"
                               type="email"
                             />
+                            </div>
+                          <div className="error">{message}</div>
                           </div>
-                          <div class="col-md-6">
+                          <div className="col-md-6">
                             <TextField
                               label="Village"
                               name="village"
                               type="text"
                             />
                           </div>
-                          <div class="col-md-6">
+                          <div className="col-md-6">
                             <TextField
                               label="Mobile no"
                               name="mobileno"
                               type="text"
                             />
                           </div>
-                          <div class="col-md-6">
+                          <div className="col-md-6">
                             <TextField
                               label="Password"
                               name="password"
                               type="text"
                             />
                           </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
+                          <div className="col-md-6">
+                            <div className="form-group">
                               <SelectionFiels
                                 name="role_id"
                                 type="dropdown"
@@ -130,13 +135,13 @@ function AddMember(props) {
                       <Modal.Footer className="justify-content-between">
                         <button
                           type="button"
-                          class="btn btn-default"
+                          className="btn btn-default"
                           data-dismiss="modal"
                           onClick={props.handleClose}
                         >
                           Close
                         </button>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" className="btn btn-primary">
                           Submit
                         </button>
                       </Modal.Footer>

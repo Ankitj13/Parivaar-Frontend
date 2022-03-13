@@ -2,9 +2,9 @@ import React from 'react'
 
 export const GlobelFilter = ({filter, setFilter}) => {
     return (
-        <div class="form-group">
-        <form class="search-form">
-          <div class="input-group">
+        <div className="form-group">
+        <form className="search-form">
+          <div className="input-group">
             <input
               type="text"
               name="search"
@@ -13,9 +13,9 @@ export const GlobelFilter = ({filter, setFilter}) => {
               value={filter || ''}
               onChange={(e) => setFilter(e.target.value)}
             />
-            <div class="input-group-append">
-              <button type="button" class="btn btn-default">
-                <i class="fas fa-search"></i>
+            <div className="input-group-append">
+              <button type="button" className="btn btn-default">
+                <i className="fas fa-search"></i>
               </button>
             </div>
           </div>

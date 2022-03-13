@@ -13,6 +13,10 @@ import {
 
 import AddBenegiciaryDialog from "./AddBenegiciaryDialog";
 import DistrictFilter from "../include/DistrictFilter";
+import BeneficiaryLactaticMotherDaily from "../common/BeneficiaryLactaticMotherDaily";
+import BeneficiaryMotherDaillyAttendence from "../common/BeneficiaryMotherDaillyAttendence";
+import BeneficiaryLactaticMotherQuterlyAttendenceTable from "../common/BeneficiaryLactaticMotherQuterlyAttendenceTable";
+import { addChild, addMother, addLacticMother} from "../../actions/auth";
 
 function Beneficiary() {
   let dispatch = useDispatch();
@@ -28,42 +32,86 @@ function Beneficiary() {
     dispatch(loadAllLactacticMothers());
   };
 
-  const [modalShow, setModalShow] = useState(false);
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
   const { user: currentUser } = useSelector((state) => state.auth);
+  const [successful, setSuccessful] = useState(false);
+
+  useEffect(() => {
+    dispatch(loadAllChilds());
+   // console.log(dispatch(loadMembersUsers()));
+  }, []);
+
+  const saveChildChanges = (values) => {
+    dispatch(addChild(values))
+      .then(() => {
+        setShow(false);
+        dispatch(loadAllChilds());
+        setSuccessful(true);
+      })
+      .catch((e) => {
+        setSuccessful(false);
+      });
+  };
+
+  const saveMotherChanges = (values) => {
+    dispatch(addMother(values))
+      .then(() => {
+        setShow(false);
+        dispatch(loadAllMothers());
+        setSuccessful(true);
+      })
+      .catch((e) => {
+        setSuccessful(false);
+      });
+  };
+
+  const saveLactacticMotherChanges = (values) => {
+    dispatch(addLacticMother(values))
+      .then(() => {
+        setShow(false);
+        dispatch(loadAllLactacticMothers());
+        setSuccessful(true);
+      })
+      .catch((e) => {
+        setSuccessful(false);
+      });
+  };
 
   if (!currentUser) {
     return <Redirect to="/login" />;
   }
   return (
-    <div class="content-wrapper">
-      <section class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
+    <div className="content-wrapper">
+      <section className="content-header">
+        <div className="container-fluid">
+          <div className="row mb-2">
+            <div className="col-sm-6">
               <h1>Beneficiary</h1>
             </div>
           </div>
         </div>
       </section>
-      <section class="content">
-        <div class="container-fluid">
+      <section className="content">
+        <div className="container-fluid">
           <DistrictFilter />
 
-          <div class="row">
-            <div class="col-lg-6 col-12">
-              <div class="form-group"></div>
+          <div className="row">
+            <div className="col-lg-6 col-12">
+              <div className="form-group"></div>
             </div>
-            <div class="col-lg-6 col-12">
-              <div class="form-group">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="far fa-calendar-alt"></i>
+            <div className="col-lg-6 col-12">
+              <div className="form-group">
+                <div className="input-group">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text">
+                      <i className="far fa-calendar-alt"></i>
                     </span>
                   </div>
                   <input
                     type="text"
-                    class="form-control float-right"
+                    className="form-control float-right"
                     id="reservation"
                   />
                 </div>
@@ -71,26 +119,26 @@ function Beneficiary() {
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-12">
-              <div class="card-outline-tabs">
-                <div class="card-header p-0 border-bottom-0">
+          <div className="row">
+            <div className="col-12">
+              <div className="card-outline-tabs">
+                <div className="card-header p-0 border-bottom-0">
                   <ul
-                    class="nav nav-tabs "
+                    className="nav nav-tabs "
                     id="custom-tabs-four-tab"
                     role="tablist"
                   >
-                    <NavLink class="pt-2 px-3" to="#">
+                    <NavLink className="pt-2 px-3" to="#">
                       <i
-                        class="fas fa-user-plus"
+                        className="fas fa-user-plus"
                         data-toggle="modal"
                         data-target="#modal-lg"
-                        onClick={() => setModalShow(true)}
+                        onClick={handleShow}
                       ></i>
                     </NavLink>
-                    <li class="nav-item">
+                    <li className="nav-item">
                       <a
-                        class="nav-link active"
+                        className="nav-link active"
                         id="custom-tabs-four-child-tab"
                         data-toggle="pill"
                         href="#custom-tabs-four-child"
@@ -102,9 +150,9 @@ function Beneficiary() {
                         Child
                       </a>
                     </li>
-                    <li class="nav-item">
+                    <li className="nav-item">
                       <a
-                        class="nav-link"
+                        className="nav-link"
                         id="custom-tabs-four-lactating-mother-tab"
                         data-toggle="pill"
                         href="#custom-tabs-four-lactating-mother"
@@ -116,9 +164,9 @@ function Beneficiary() {
                         Lactating Mother
                       </a>
                     </li>
-                    <li class="nav-item">
+                    <li className="nav-item">
                       <a
-                        class="nav-link"
+                        className="nav-link"
                         id="custom-tabs-four-four-mother-tab"
                         data-toggle="pill"
                         href="#custom-tabs-four-mother"
@@ -133,23 +181,23 @@ function Beneficiary() {
                   </ul>
                 </div>
 
-                <div class="tab-content" id="custom-tabs-four-tabContent">
+                <div className="tab-content" id="custom-tabs-four-tabContent">
                   <div
-                    class="tab-pane fade show active"
+                    className="tab-pane fade show active"
                     id="custom-tabs-four-child"
                     role="tabpanel"
                     aria-labelledby="custom-tabs-four-child-tab"
                   >
-                    <div class="card card-primary card-outline card-outline-tabs">
-                      <div class="card-header p-0">
+                    <div className="card card-primary card-outline card-outline-tabs">
+                      <div className="card-header p-0">
                         <ul
-                          class="nav nav-tabs"
+                          className="nav nav-tabs"
                           id="custom-tabs-four-tab"
                           role="tablist"
                         >
-                          <li class="nav-item">
+                          <li className="nav-item">
                             <a
-                              class="nav-link active"
+                              className="nav-link active"
                               id="custom-tabs-four-child-daily-tab"
                               data-toggle="pill"
                               href="#custom-tabs-four-child-daily"
@@ -160,9 +208,9 @@ function Beneficiary() {
                               Daily
                             </a>
                           </li>
-                          <li class="nav-item">
+                          <li className="nav-item">
                             <a
-                              class="nav-link"
+                              className="nav-link"
                               id="custom-tabs-four-child-quarterly-tab"
                               data-toggle="pill"
                               href="#custom-tabs-four-child-quarterly"
@@ -175,39 +223,39 @@ function Beneficiary() {
                           </li>
                         </ul>
                       </div>
-                      <div class="card-body">
+                      <div className="card-body">
                         <div
-                          class="tab-content"
+                          className="tab-content"
                           id="custom-tabs-four-tabContent"
                         >
                           <div
-                            class="tab-pane fade show active"
+                            className="tab-pane fade show active"
                             id="custom-tabs-four-child-daily"
                             role="tabpanel"
                             aria-labelledby="custom-tabs-four-child-daily-tab"
                           >
-                            <div class="card-body table-responsive p-0">
-                              <BeneficiaryDailyAttendenceTable handleAllChilds={handleAllChilds}/>
+                            <div className="card-body table-responsive p-0">
+                              <BeneficiaryDailyAttendenceTable handleAllChilds={handleAllChilds} />
                             </div>
                             <hr />
-                            <div class="float-right">
-                              <button type="submit" class="btn btn-primary">
+                            <div className="float-right">
+                              <button type="submit" className="btn btn-primary">
                                 Submit
                               </button>
                             </div>
                           </div>
                           <div
-                            class="tab-pane fade"
+                            className="tab-pane fade"
                             id="custom-tabs-four-child-quarterly"
                             role="tabpanel"
                             aria-labelledby="custom-tabs-four-child-quarterly-tab"
                           >
-                            <div class="card-body table-responsive p-0">
+                            <div className="card-body table-responsive p-0">
                               <BeneficiaryChildQuterlyAttendenceTable handleAllChilds={handleAllChilds}/>
                             </div>
                             <hr />
-                            <div class="float-right">
-                              <button type="submit" class="btn btn-primary">
+                            <div className="float-right">
+                              <button type="submit" className="btn btn-primary">
                                 Submit
                               </button>
                             </div>
@@ -217,21 +265,21 @@ function Beneficiary() {
                     </div>
                   </div>
                   <div
-                    class="tab-pane fade"
+                    className="tab-pane fade"
                     id="custom-tabs-four-lactating-mother"
                     role="tabpanel"
                     aria-labelledby="custom-tabs-four-lactating-mother-tab"
                   >
-                    <div class="card card-primary card-outline card-outline-tabs">
-                      <div class="card-header p-0">
+                    <div className="card card-primary card-outline card-outline-tabs">
+                      <div className="card-header p-0">
                         <ul
-                          class="nav nav-tabs"
+                          className="nav nav-tabs"
                           id="custom-tabs-four-tab"
                           role="tablist"
                         >
-                          <li class="nav-item">
+                          <li className="nav-item">
                             <a
-                              class="nav-link active"
+                              className="nav-link active"
                               id="custom-tabs-four-lactating-mother-daily-tab"
                               data-toggle="pill"
                               href="#custom-tabs-four-lactating-mother-daily"
@@ -242,9 +290,9 @@ function Beneficiary() {
                               Daily
                             </a>
                           </li>
-                          <li class="nav-item">
+                          <li className="nav-item">
                             <a
-                              class="nav-link"
+                              className="nav-link"
                               id="custom-tabs-four-lactating-mother-quarterly-tab"
                               data-toggle="pill"
                               href="#custom-tabs-four-lactating-mother-quarterly"
@@ -257,39 +305,39 @@ function Beneficiary() {
                           </li>
                         </ul>
                       </div>
-                      <div class="card-body">
+                      <div className="card-body">
                         <div
-                          class="tab-content"
+                          className="tab-content"
                           id="custom-tabs-four-tabContent"
                         >
                           <div
-                            class="tab-pane fade show active"
+                            className="tab-pane fade show active"
                             id="custom-tabs-four-lactating-mother-daily"
                             role="tabpanel"
                             aria-labelledby="custom-tabs-four-lactating-mother-daily-tab"
                           >
-                            <div class="card-body table-responsive p-0">
-                              <BeneficiaryDailyAttendenceTable handleAllLactaticMothers={handleAllLactaticMothers}/>
+                            <div className="card-body table-responsive p-0">
+                              <BeneficiaryLactaticMotherDaily handleAllLactaticMothers={handleAllLactaticMothers}/>
                             </div>
                             <hr />
-                            <div class="float-right">
-                              <button type="submit" class="btn btn-primary">
+                            <div className="float-right">
+                              <button type="submit" className="btn btn-primary">
                                 Submit
                               </button>
                             </div>
                           </div>
                           <div
-                            class="tab-pane fade"
+                            className="tab-pane fade"
                             id="custom-tabs-four-lactating-mother-quarterly"
                             role="tabpanel"
                             aria-labelledby="custom-tabs-four-lactating-mother-quarterly-tab"
                           >
-                            <div class="card-body table-responsive p-0">
-                              <BeneficiaryMotherQuterlyAttendenceTable handleAllLactaticMothers={handleAllLactaticMothers}/>
+                            <div className="card-body table-responsive p-0">
+                              <BeneficiaryLactaticMotherQuterlyAttendenceTable handleAllLactaticMothers={handleAllLactaticMothers}/>
                             </div>
                             <hr />
-                            <div class="float-right">
-                              <button type="submit" class="btn btn-primary">
+                            <div className="float-right">
+                              <button type="submit" className="btn btn-primary">
                                 Submit
                               </button>
                             </div>
@@ -299,21 +347,21 @@ function Beneficiary() {
                     </div>
                   </div>
                   <div
-                    class="tab-pane fade"
+                    className="tab-pane fade"
                     id="custom-tabs-four-mother"
                     role="tabpanel"
                     aria-labelledby="custom-tabs-four-mother-tab"
                   >
-                    <div class="card card-primary card-outline card-outline-tabs">
-                      <div class="card-header p-0">
+                    <div className="card card-primary card-outline card-outline-tabs">
+                      <div className="card-header p-0">
                         <ul
-                          class="nav nav-tabs"
+                          className="nav nav-tabs"
                           id="custom-tabs-four-tab"
                           role="tablist"
                         >
-                          <li class="nav-item">
+                          <li className="nav-item">
                             <a
-                              class="nav-link active"
+                              className="nav-link active"
                               id="custom-tabs-four-mother-daily-tab"
                               data-toggle="pill"
                               href="#custom-tabs-four-mother-daily"
@@ -324,9 +372,9 @@ function Beneficiary() {
                               Daily
                             </a>
                           </li>
-                          <li class="nav-item">
+                          <li className="nav-item">
                             <a
-                              class="nav-link"
+                              className="nav-link"
                               id="custom-tabs-four-mother-quarterly-tab"
                               data-toggle="pill"
                               href="#custom-tabs-four-mother-quarterly"
@@ -339,39 +387,39 @@ function Beneficiary() {
                           </li>
                         </ul>
                       </div>
-                      <div class="card-body">
+                      <div className="card-body">
                         <div
-                          class="tab-content"
+                          className="tab-content"
                           id="custom-tabs-four-tabContent"
                         >
                           <div
-                            class="tab-pane fade show active"
+                            className="tab-pane fade show active"
                             id="custom-tabs-four-mother-daily"
                             role="tabpanel"
                             aria-labelledby="custom-tabs-four-mother-daily-tab"
                           >
-                            <div class="card-body table-responsive p-0">
-                              <BeneficiaryDailyAttendenceTable handleAllMothers={handleAllMothers}/>
+                            <div className="card-body table-responsive p-0">
+                              <BeneficiaryMotherDaillyAttendence handleAllMothers={handleAllMothers}/>
                             </div>
                             <hr />
-                            <div class="float-right">
-                              <button type="submit" class="btn btn-primary">
+                            <div className="float-right">
+                              <button type="submit" className="btn btn-primary">
                                 Submit
                               </button>
                             </div>
                           </div>
                           <div
-                            class="tab-pane fade"
+                            className="tab-pane fade"
                             id="custom-tabs-four-mother-quarterly"
                             role="tabpanel"
                             aria-labelledby="custom-tabs-four-mother-quarterly-tab"
                           >
-                            <div class="card-body table-responsive p-0">
+                            <div className="card-body table-responsive p-0">
                               <BeneficiaryMotherQuterlyAttendenceTable handleAllMothers={handleAllMothers}/>
                             </div>
                             <hr />
-                            <div class="float-right">
-                              <button type="submit" class="btn btn-primary">
+                            <div className="float-right">
+                              <button type="submit" className="btn btn-primary">
                                 Submit
                               </button>
                             </div>
@@ -387,8 +435,11 @@ function Beneficiary() {
         </div>
       </section>
       <AddBenegiciaryDialog
-        show={modalShow}
-        onHide={() => setModalShow(false)}
+         show={show}
+         handleClose={handleClose}
+         handleChildSubmit={saveChildChanges}
+         handleMotherSubmit={saveMotherChanges}
+         handleLactaticMotherSubmit={saveLactacticMotherChanges}
       />
     </div>
   );

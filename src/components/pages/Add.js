@@ -15,9 +15,10 @@ function Add() {
   const handleClose = () => setShow(false);
   const [successful, setSuccessful] = useState(false);
   const dispatch = useDispatch();
-
+  const { message } = useSelector((state) => state.message);
   // let dispatch = useDispatch();
   const { employees } = useSelector((state) => state.data);
+  console.log(employees);
   useEffect(() => {
     dispatch(loadMembersUsers());
    // console.log(dispatch(loadMembersUsers()));
@@ -25,20 +26,15 @@ function Add() {
 
   const saveChanges = (values) => {
     dispatch(addMember(values))
-      .then(() => {
+      .then((response) => {
         setShow(false);
         dispatch(loadMembersUsers());
         setSuccessful(true);
-
-        //  window.location.reload();
       })
       .catch((e) => {
-        console.log(e.response.data);
         setSuccessful(false);
       });
   };
-
-  
 
   return (
     <React.Fragment>
@@ -79,7 +75,7 @@ function Add() {
               <div class="col-12">
                 <div class="card">
                   <div class="card-body table-responsive p-0">
-<Pagination data={employees} columns={EmployeeTable} />
+                    <Pagination data={employees} columns={EmployeeTable} />
                   </div>
                 </div>
               </div>
